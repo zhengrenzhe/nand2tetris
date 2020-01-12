@@ -1,0 +1,11 @@
+// MuxCal 是mux的实际运算部分，抽出这个是因为mux16基于mux，但无需将notSel计算16次，所以将其公共计算部分提取出来
+
+CHIP MuxCal {
+    IN a, b, sel, notSel;
+    OUT out;
+
+    PARTS:
+    And(a=a, b=notSel, out=aAndnotSel);
+    And(a=b, b=sel, out=bAndSel);
+    Xor(a=aAndnotSel, b=bAndSel, out=out);
+}
