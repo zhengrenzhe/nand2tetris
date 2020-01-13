@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.3.0
+      with:
+        java-version: 8.x
+        java-package: jre
+        architecture: x64
+    - name: Test Project 1
+      run: make proj1
+    - name: Test Project 2
+      run: make proj2
