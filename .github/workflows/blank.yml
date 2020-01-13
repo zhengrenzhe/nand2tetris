@@ -15,7 +15,7 @@ jobs:
           architecture: x64
       
       - name: git clone
-        run: git clone https://github.com/zhengrenzhe/nand2tetris.git
+        uses: actions/checkout@v2
 
       - name: Test Project 1
         run: make proj1
