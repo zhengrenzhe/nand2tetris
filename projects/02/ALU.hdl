@@ -67,22 +67,6 @@ CHIP ALU {
 
     // calculate nx
     Xor1And16(a=nx, b=xAfterZX, out=xAfterNX);
-    // Xor(a=nx, b=xAfterZX[0], out=xAfterNX[0]);
-    // Xor(a=nx, b=xAfterZX[1], out=xAfterNX[1]);
-    // Xor(a=nx, b=xAfterZX[2], out=xAfterNX[2]);
-    // Xor(a=nx, b=xAfterZX[3], out=xAfterNX[3]);
-    // Xor(a=nx, b=xAfterZX[4], out=xAfterNX[4]);
-    // Xor(a=nx, b=xAfterZX[5], out=xAfterNX[5]);
-    // Xor(a=nx, b=xAfterZX[6], out=xAfterNX[6]);
-    // Xor(a=nx, b=xAfterZX[7], out=xAfterNX[7]);
-    // Xor(a=nx, b=xAfterZX[8], out=xAfterNX[8]);
-    // Xor(a=nx, b=xAfterZX[9], out=xAfterNX[9]);
-    // Xor(a=nx, b=xAfterZX[10], out=xAfterNX[10]);
-    // Xor(a=nx, b=xAfterZX[11], out=xAfterNX[11]);
-    // Xor(a=nx, b=xAfterZX[12], out=xAfterNX[12]);
-    // Xor(a=nx, b=xAfterZX[13], out=xAfterNX[13]);
-    // Xor(a=nx, b=xAfterZX[14], out=xAfterNX[14]);
-    // Xor(a=nx, b=xAfterZX[15], out=xAfterNX[15]);
 
     // calculate zy
     Not(in=zy, out=zyRevert);
@@ -109,29 +93,44 @@ CHIP ALU {
 
     // calculate ny
     Xor1And16(a=ny, b=yAfterZY, out=yAfterNY);
-    // Xor(a=ny, b=yAfterZY[0], out=yAfterNY[0]);
-    // Xor(a=ny, b=yAfterZY[1], out=yAfterNY[1]);
-    // Xor(a=ny, b=yAfterZY[2], out=yAfterNY[2]);
-    // Xor(a=ny, b=yAfterZY[3], out=yAfterNY[3]);
-    // Xor(a=ny, b=yAfterZY[4], out=yAfterNY[4]);
-    // Xor(a=ny, b=yAfterZY[5], out=yAfterNY[5]);
-    // Xor(a=ny, b=yAfterZY[6], out=yAfterNY[6]);
-    // Xor(a=ny, b=yAfterZY[7], out=yAfterNY[7]);
-    // Xor(a=ny, b=yAfterZY[8], out=yAfterNY[8]);
-    // Xor(a=ny, b=yAfterZY[9], out=yAfterNY[9]);
-    // Xor(a=ny, b=yAfterZY[10], out=yAfterNY[10]);
-    // Xor(a=ny, b=yAfterZY[11], out=yAfterNY[11]);
-    // Xor(a=ny, b=yAfterZY[12], out=yAfterNY[12]);
-    // Xor(a=ny, b=yAfterZY[13], out=yAfterNY[13]);
-    // Xor(a=ny, b=yAfterZY[14], out=yAfterNY[14]);
-    // Xor(a=ny, b=yAfterZY[15], out=yAfterNY[15]);
 
     // calculate f
-    Not(in=f, out=fRevert);
-    Add16(a=xAfterNX, b=yAfterNY, out=outAfterAdd);
-    Add16(
-        a=outAfterAdd, 
-        b[0]=fRevert, 
+    And16(a=xAfterNX, b=yAfterNY, out=outAfterAdd);
+    Or16(a=xAfterNX, b=yAfterNY, out=outAfterOr);
+    And16(
+        a=outAfterOr, 
+        b[0]=f,
+        b[1]=f,
+        b[2]=f,
+        b[3]=f,
+        b[4]=f,
+        b[5]=f,
+        b[6]=f,
+        b[7]=f,
+        b[8]=f,
+        b[9]=f,
+        b[10]=f,
+        b[11]=f,
+        b[12]=f,
+        b[13]=f,
+        b[14]=f,
+        b[15]=f,
+        out=outAfterOr1
+    );
+    Add16(a=outAfterOr1, b=outAfterAdd, out=outAfterF);
+
+    // calculate no
+    Xor1And16(a=no, b=outAfterF, out=out);
+    Xor1And16(a=no, b=outAfterF, out=outTmp);
+
+    // calculate zr
+    Or16Way(in=outTmp, out=out16);
+    Not(in=out16, out=zr);
+
+    // calculate ng
+    And16(
+        a=outTmp, 
+        b[0]=false,
         b[1]=false,
         b[2]=false,
         b[3]=false,
@@ -146,49 +145,7 @@ CHIP ALU {
         b[12]=false,
         b[13]=false,
         b[14]=false,
-        b[15]=false,
-        out=outAfterF
-    );
-
-    // calculate no
-    Xor1And16(a=no, b=outAfterF, out=outTmp);
-    Xor1And16(a=no, b=outAfterF, out=out);
-    // Xor(a=no, b=outAfterF[0], out=out[0]);
-    // Xor(a=no, b=outAfterF[1], out=out[1]);
-    // Xor(a=no, b=outAfterF[2], out=out[2]);
-    // Xor(a=no, b=outAfterF[3], out=out[3]);
-    // Xor(a=no, b=outAfterF[4], out=out[4]);
-    // Xor(a=no, b=outAfterF[5], out=out[5]);
-    // Xor(a=no, b=outAfterF[6], out=out[6]);
-    // Xor(a=no, b=outAfterF[7], out=out[7]);
-    // Xor(a=no, b=outAfterF[8], out=out[8]);
-    // Xor(a=no, b=outAfterF[9], out=out[9]);
-    // Xor(a=no, b=outAfterF[10], out=out[10]);
-    // Xor(a=no, b=outAfterF[11], out=out[11]);
-    // Xor(a=no, b=outAfterF[12], out=out[12]);
-    // Xor(a=no, b=outAfterF[13], out=out[13]);
-    // Xor(a=no, b=outAfterF[14], out=out[14]);
-    // Xor(a=no, b=outAfterF[15], out=out[15]);
-
-    // calculate zr
-    Or16Way(in=outTmp, out=zrOut);
-    // Or(a=outTmp[0], b=outTmp[1], out=zrOut1);
-    // Or(a=zrOut1, b=outTmp[2], out=zrOut2);
-    // Or(a=zrOut2, b=outTmp[3], out=zrOut3);
-    // Or(a=zrOut3, b=outTmp[4], out=zrOut4);
-    // Or(a=zrOut4, b=outTmp[5], out=zrOut5);
-    // Or(a=zrOut5, b=outTmp[6], out=zrOut6);
-    // Or(a=zrOut6, b=outTmp[7], out=zrOut7);
-    // Or(a=zrOut7, b=outTmp[8], out=zrOut8);
-    // Or(a=zrOut8, b=outTmp[9], out=zrOut9);
-    // Or(a=zrOut9, b=outTmp[10], out=zrOut10);
-    // Or(a=zrOut10, b=outTmp[11], out=zrOut11);
-    // Or(a=zrOut11, b=outTmp[12], out=zrOut12);
-    // Or(a=zrOut12, b=outTmp[13], out=zrOut13);
-    // Or(a=zrOut13, b=outTmp[14], out=zrOut14);
-    // Or(a=zrOut14, b=outTmp[15], out=zrOut15);
-    Not(in=zrOut, out=zr);
-
-    // calculate ng
-    AndLeft(a=true, b=outTmp, out=ng);
+        b[15]=true,
+        out=ngTmp);
+    Or16Way(in=ngTmp, out=ng);
 }
