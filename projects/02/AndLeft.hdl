@@ -1,0 +1,7 @@
+CHIP AndLeft {
+    IN a, b[16];
+    OUT out;
+
+    PARTS:
+    And(a=a, b=b[15], out=out);
+}
