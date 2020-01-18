@@ -1,0 +1,25 @@
+CHIP ThreePointThree {
+    IN a, b, c;
+    OUT out;
+
+    PARTS:
+    Not(in=a, out=notA);
+    Not(in=b, out=notB);
+    Not(in=c, out=notC);
+
+    And(a=notA, b=b, out=g11);
+    And(a=g11, b=c, out=g1);
+
+    And(a=a, b=notB, out=g21);
+    And(a=g21, b=c, out=g2);
+
+    And(a=a, b=b, out=g31);
+    And(a=g31, b=notC, out=g3);
+
+    And(a=a, b=b, out=g41);
+    And(a=g41, b=c, out=g4);
+
+    Or(a=g1, b=g2, out=r1);
+    Or(a=r1, b=g3, out=r2);
+    Or(a=r2, b=g4, out=out);
+}
