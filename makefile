@@ -29,6 +29,6 @@ proj4:
 
 	@echo
 
-	$(Assembler) $(PROJ_4)/mult/mult.asm
+	$(Assembler) $(PROJ_4)/mult/Mult.asm
 	@echo
 	$(CPUEmulator) $(PROJ_4)/mult/Mult.tst
