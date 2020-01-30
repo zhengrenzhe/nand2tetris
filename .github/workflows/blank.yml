@@ -17,8 +17,5 @@ jobs:
       - name: git clone
         uses: actions/checkout@v2
 
-      - name: Test Project 1
-        run: make proj1
-
-      - name: Test Project 2
-        run: make proj2
+      - name: Test
+        run: make test

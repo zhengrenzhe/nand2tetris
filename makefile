@@ -32,3 +32,5 @@ proj4:
 	$(Assembler) $(PROJ_4)/mult/Mult.asm
 	@echo
 	$(CPUEmulator) $(PROJ_4)/mult/Mult.tst
+
+test: proj1 proj2 proj3 proj4
