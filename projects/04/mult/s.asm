@@ -8,17 +8,19 @@
 
 // Put your code here.
 
+
+
 @R2
 M=0
 
 @R0
 D=M
-@end
+@end_yes
 D;JEQ
 
 @R1
 D=M
-@end
+@end_yes
 D;JEQ
 
 @times
@@ -40,6 +42,6 @@ D=D-M
 @multiplies_loop
 D;JGT
 
-(end)
-@end
+(end_yes)
+@end_yes
 0;JEQ
