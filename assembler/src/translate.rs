@@ -1,4 +1,4 @@
-use crate::table::{get_comp_binary, get_dest_binary, get_jump_binary};
+use crate::static_table::{get_comp_binary, get_dest_binary, get_jump_binary};
 
 pub fn translate(lines: Vec<String>) -> Vec<String> {
     let mut result: Vec<String> = vec![];
