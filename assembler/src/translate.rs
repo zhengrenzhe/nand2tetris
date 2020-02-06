@@ -1,11 +1,13 @@
 use crate::static_table::{get_comp_binary, get_dest_binary, get_jump_binary};
+use crate::symbol_table::SymbolTable;
 
-pub fn translate(lines: Vec<String>) -> Vec<String> {
+// translate code to binary format
+pub fn translate(lines: Vec<String>, segment_table: &mut SymbolTable) -> Vec<String> {
     let mut result: Vec<String> = vec![];
 
     for line in lines.iter() {
         if line.starts_with('@') {
-            result.push(translate_a_instruction(line))
+            result.push(translate_a_instruction(line, segment_table))
         } else {
             result.push(translate_c_instruction(line))
         }
@@ -14,19 +16,17 @@ pub fn translate(lines: Vec<String>) -> Vec<String> {
     result
 }
 
-fn translate_a_instruction(source: &str) -> String {
+// translate A-instruction
+fn translate_a_instruction(source: &str, segment_table: &mut SymbolTable) -> String {
     let code = source.get(1..).expect("not found char after position 1");
 
     match code.parse::<u32>() {
-        Ok(val) => {
-            return format!("{:016b}", val);
-        }
-        Err(_) => println!("Err"),
+        Ok(val) => format!("0{:015b}", val),
+        Err(_) => segment_table.get(code),
     }
-
-    code.to_string()
 }
 
+// translate C-instruction
 fn translate_c_instruction(source: &str) -> String {
     let c_struct = split_c_instruction(source);
 
@@ -65,7 +65,7 @@ fn split_c_instruction(source: &str) -> CInstruction {
 
     CInstruction {
         dest,
-        comp: source_opt.clone(),
+        comp: source_opt,
         jump,
     }
 }
@@ -76,9 +76,12 @@ mod tests {
 
     #[test]
     fn test_translate_a_instruction() {
-        assert_eq!(translate_a_instruction("@2"), "0000000000000010");
-        assert_eq!(translate_a_instruction("@3"), "0000000000000011");
-        assert_eq!(translate_a_instruction("@0"), "0000000000000000");
+        let mut st = SymbolTable::new();
+        assert_eq!(translate_a_instruction("@2", &mut st), "0000000000000010");
+        assert_eq!(translate_a_instruction("@3", &mut st), "0000000000000011");
+        assert_eq!(translate_a_instruction("@0", &mut st), "0000000000000000");
+        assert_eq!(translate_a_instruction("@foo", &mut st), "0000000000010000");
+        assert_eq!(translate_a_instruction("@bar", &mut st), "0000000000010001");
     }
 
     #[test]

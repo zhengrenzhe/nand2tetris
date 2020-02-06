@@ -8,6 +8,7 @@ use crate::translate::translate;
 mod io;
 mod pre_process;
 mod static_table;
+mod symbol_table;
 mod translate;
 
 fn main() {
@@ -24,9 +25,9 @@ fn run() -> Result<(), Error> {
     let (source, file_name) = read_file()?;
 
     // remove all blank lines, comments
-    let pre_processed_code = pre_process(source);
+    let (pre_processed_code, mut segment_table) = pre_process(source);
 
-    let result = translate(pre_processed_code);
+    let result = translate(pre_processed_code, &mut segment_table);
 
     write_file(result, format!("{}.hack", file_name))?;
 
