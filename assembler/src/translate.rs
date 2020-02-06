@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use crate::table::{get_comp_binary, get_dest_binary, get_jump_binary};
 
 pub fn translate(lines: Vec<String>) -> Vec<String> {
     let mut result: Vec<String> = vec![];
@@ -29,13 +29,10 @@ fn translate_a_instruction(source: &str) -> String {
 
 fn translate_c_instruction(source: &str) -> String {
     let c_struct = split_c_instruction(source);
-    let dest_table = create_dest_table();
-    let comp_table = create_comp_table();
-    let jump_table = create_jump_table();
 
-    let dest = *dest_table.get(c_struct.dest.as_str()).unwrap();
-    let comp = *comp_table.get(c_struct.comp.as_str()).unwrap();
-    let jump = *jump_table.get(c_struct.jump.as_str()).unwrap();
+    let dest = get_dest_binary(c_struct.dest.as_str());
+    let comp = get_comp_binary(c_struct.comp.as_str());
+    let jump = get_jump_binary(c_struct.jump.as_str());
 
     format!("111{}{}{}", comp, dest, jump)
 }
@@ -71,69 +68,6 @@ fn split_c_instruction(source: &str) -> CInstruction {
         comp: source_opt.clone(),
         jump,
     }
-}
-
-fn create_comp_table() -> HashMap<&'static str, &'static str> {
-    let mut comp_table = HashMap::new();
-
-    comp_table.insert("0", "0101010");
-    comp_table.insert("1", "0111111");
-    comp_table.insert("-1", "0111010");
-    comp_table.insert("D", "0001100");
-    comp_table.insert("A", "0110000");
-    comp_table.insert("!D", "0001101");
-    comp_table.insert("!A", "0110001");
-    comp_table.insert("-D", "0001111");
-    comp_table.insert("-A", "0110011");
-    comp_table.insert("D+1", "0011111");
-    comp_table.insert("A+1", "0110111");
-    comp_table.insert("D-1", "0001110");
-    comp_table.insert("A-1", "0110010");
-    comp_table.insert("D+A", "0000010");
-    comp_table.insert("D-A", "0010011");
-    comp_table.insert("A-D", "0000111");
-    comp_table.insert("D&A", "0000000");
-    comp_table.insert("D|A", "0010101");
-    comp_table.insert("M", "1110000");
-    comp_table.insert("!M", "1110001");
-    comp_table.insert("-M", "1110011");
-    comp_table.insert("M+1", "1110111");
-    comp_table.insert("M-1", "1110010");
-    comp_table.insert("D+M", "1000010");
-    comp_table.insert("D-M", "1010011");
-    comp_table.insert("M-D", "1000111");
-    comp_table.insert("D&M", "1000000");
-    comp_table.insert("D|M", "1010101");
-
-    comp_table
-}
-
-fn create_dest_table() -> HashMap<&'static str, &'static str> {
-    let mut dest_table = HashMap::new();
-    dest_table.insert("", "000");
-    dest_table.insert("M", "001");
-    dest_table.insert("D", "010");
-    dest_table.insert("MD", "011");
-    dest_table.insert("A", "100");
-    dest_table.insert("AM", "101");
-    dest_table.insert("AD", "110");
-    dest_table.insert("AMD", "111");
-
-    dest_table
-}
-
-fn create_jump_table() -> HashMap<&'static str, &'static str> {
-    let mut jump_table = HashMap::new();
-    jump_table.insert("", "000");
-    jump_table.insert("JGT", "001");
-    jump_table.insert("JEQ", "010");
-    jump_table.insert("JGE", "011");
-    jump_table.insert("JLT", "100");
-    jump_table.insert("JNE", "101");
-    jump_table.insert("JLE", "110");
-    jump_table.insert("JMP", "111");
-
-    jump_table
 }
 
 #[cfg(test)]

@@ -7,6 +7,7 @@ use crate::translate::translate;
 
 mod io;
 mod pre_process;
+mod table;
 mod translate;
 
 fn main() {
