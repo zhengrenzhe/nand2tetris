@@ -7,7 +7,27 @@
       <sourceFolder url="file://$MODULE_DIR$/assembler/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/assembler/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/assembler/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/assembler/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/assembler/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/assembler/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/assembler/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/utils/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/utils/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/utils/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/utils/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/benches" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/assembler/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/assembler/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/utils/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/vm-compiler/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

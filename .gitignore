@@ -2,3 +2,4 @@
 assembler/*.hack
 assembler/target
 *.zip
+target
