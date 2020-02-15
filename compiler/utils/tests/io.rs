@@ -2,27 +2,36 @@ extern crate utils;
 
 use utils::{read_lines, write_lines};
 
-#[test]
-fn io() {
-    let test_file_path = "tests/test.txt";
+const TEST_FILE_PATH: &str = "tests/test.txt";
 
-    let lines = vec![
+fn get_lines() -> Vec<String> {
+    vec![
         String::from("a"),
         String::from("b"),
         String::from("c"),
         String::from("1"),
         String::from("2"),
         String::from("3"),
-    ];
+    ]
+}
 
-    let write_result = write_lines(&lines, test_file_path);
+#[test]
+fn test_write_lines() {
+    let lines = get_lines();
+
+    let write_result = write_lines(&lines, TEST_FILE_PATH);
 
     match write_result {
         Ok(result) => assert_eq!(result, true),
         Err(err) => panic!("{}", err),
     }
+}
 
-    let read_result = read_lines(test_file_path);
+#[test]
+fn test_read_lines() {
+    let lines = get_lines();
+
+    let read_result = read_lines(TEST_FILE_PATH);
 
     match read_result {
         Ok(file) => {
