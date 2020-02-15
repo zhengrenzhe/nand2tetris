@@ -1,6 +1,6 @@
 extern crate utils;
 
-use utils::{read_lines, write_lines};
+use utils::io::{read_lines, write_lines};
 
 const TEST_FILE_PATH: &str = "tests/test.txt";
 

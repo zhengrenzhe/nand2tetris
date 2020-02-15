@@ -1,7 +1,8 @@
 use std::io::Error;
 use std::process;
 
-use utils::{get_args, read_lines};
+use utils::args::get_args;
+use utils::io::read_lines;
 
 fn main() {
     match run() {
