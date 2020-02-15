@@ -1,7 +1,7 @@
 use std::env;
 use std::io::{Error, ErrorKind};
 
-pub fn get_args() -> Result<String, Error> {
+pub fn get_args() -> Result<Vec<String>, Error> {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
@@ -11,5 +11,5 @@ pub fn get_args() -> Result<String, Error> {
         ));
     }
 
-    Ok(String::from(args[1].as_str()))
+    Ok(args[1..].to_owned())
 }

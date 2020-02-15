@@ -3,11 +3,13 @@ use std::process;
 
 use pre_process::pre_process;
 use symbol_table::generate_symbol_table;
+use translate::translate;
 use utils::args::get_args;
-use utils::io::read_lines;
+use utils::io::{read_lines, write_lines};
 
 mod pre_process;
 mod symbol_table;
+mod translate;
 
 fn main() {
     match run() {
@@ -21,13 +23,16 @@ fn main() {
 
 fn run() -> Result<(), Error> {
     let file_path = get_args()?;
-    let file = read_lines(&file_path)?;
 
-    let clean_codes = pre_process(file.lines);
-    let (clean_codes, symbol_table) = generate_symbol_table(clean_codes);
+    for f in file_path {
+        let file = read_lines(&f)?;
 
-    println!("{:?}", clean_codes);
-    println!("{:?}", symbol_table);
+        let clean_codes = pre_process(file.lines);
+        let (clean_codes, mut symbol_table) = generate_symbol_table(clean_codes);
+        let clean_codes = translate(clean_codes, &mut symbol_table);
+
+        write_lines(&clean_codes, format!("{}.hack", file.stem).as_str())?;
+    }
 
     Ok(())
 }
