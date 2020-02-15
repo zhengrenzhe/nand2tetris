@@ -3,3 +3,4 @@ assembler/*.hack
 assembler/target
 *.zip
 target
+compiler/**/*.txt
