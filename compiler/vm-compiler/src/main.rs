@@ -5,6 +5,8 @@ use utils::args::get_args;
 use utils::io::read_lines;
 use utils::pre_process::pre_process;
 
+mod lexical;
+
 fn main() {
     match run() {
         Ok(_) => {}
