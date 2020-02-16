@@ -3,6 +3,10 @@ assembler/*.hack
 assembler/target
 *.zip
 target
-compiler/**/*.txt
-compiler/**/*.hack
-compiler/**/*.asm
+compiler/assembler/**/*.txt
+compiler/assembler/**/*.hack
+compiler/assembler/**/*.asm
+compiler/vm-compiler/**/*.txt
+compiler/vm-compiler/**/*.hack
+compiler/vm-compiler/**/*.asm
+compiler/VMTranslator
