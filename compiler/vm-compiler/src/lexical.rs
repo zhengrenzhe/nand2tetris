@@ -1,7 +1,8 @@
 #[derive(Debug)]
 pub struct Token {
-    command: String,
-    args: Vec<String>,
+    pub command: String,
+    pub target: String,
+    pub arg: String,
 }
 
 pub fn lexical(code: &str) -> Option<Token> {
@@ -13,7 +14,8 @@ pub fn lexical(code: &str) -> Option<Token> {
 
     Some(Token {
         command: String::from(parts[0]),
-        args: parts[1..].iter().map(|item| String::from(*item)).collect(),
+        target: String::from(*parts.get(1).unwrap_or(&"")),
+        arg: String::from(*parts.get(2).unwrap_or(&"")),
     })
 }
 
@@ -27,10 +29,11 @@ mod tests {
             panic!(format!("val: {:?} should be None", val));
         }
 
-        match lexical("push") {
+        match lexical("add") {
             Some(token) => {
-                assert_eq!(token.command, String::from("push"));
-                assert_eq!(token.args.len(), 0);
+                assert_eq!(token.command, String::from("add"));
+                assert_eq!(token.target, String::from(""));
+                assert_eq!(token.arg, String::from(""));
             }
             None => panic!("should not be None"),
         }
@@ -38,8 +41,8 @@ mod tests {
         match lexical("push 12") {
             Some(token) => {
                 assert_eq!(token.command, String::from("push"));
-                assert_eq!(token.args.len(), 1);
-                assert_eq!(token.args[0], String::from("12"));
+                assert_eq!(token.target, String::from("12"));
+                assert_eq!(token.arg, String::from(""));
             }
             None => panic!("should not be None"),
         }
@@ -47,9 +50,8 @@ mod tests {
         match lexical("push constant 12") {
             Some(token) => {
                 assert_eq!(token.command, String::from("push"));
-                assert_eq!(token.args.len(), 2);
-                assert_eq!(token.args[0], String::from("constant"));
-                assert_eq!(token.args[1], String::from("12"));
+                assert_eq!(token.target, String::from("constant"));
+                assert_eq!(token.arg, String::from("12"));
             }
             None => panic!("should not be None"),
         }
