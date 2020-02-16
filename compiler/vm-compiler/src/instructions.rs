@@ -1,3 +1,27 @@
+pub fn switch_base_address(point_name: &str) -> String {
+    format!(
+        "@{}",
+        if point_name == "TEMP" {
+            "5"
+        } else if point_name == "STATIC" {
+            "16"
+        } else {
+            point_name
+        }
+    )
+}
+
+pub fn switch_access_or_access_pointer(point_name: &str) -> String {
+    format!(
+        "D={}",
+        if point_name == "TEMP" || point_name == "STATIC" {
+            "A"
+        } else {
+            "M"
+        }
+    )
+}
+
 pub fn dec_sp() -> Vec<String> {
     vec![String::from("@SP"), String::from("M=M-1")]
 }

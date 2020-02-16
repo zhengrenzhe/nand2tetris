@@ -40,6 +40,7 @@ fn map_arg(target: &str) -> String {
         "this" => String::from("THIS"),
         "that" => String::from("THAT"),
         "temp" => String::from("TEMP"),
+        "static" => String::from("STATIC"),
         _ => panic!(format!("target:{} not found", target)),
     }
 }
@@ -49,15 +50,8 @@ fn push(target: String, arg: String) -> Vec<String> {
     [
         vec![
             format!("// push {} {}", target, arg),
-            format!(
-                "@{}",
-                if point_name == "TEMP" {
-                    "5"
-                } else {
-                    point_name.as_str()
-                }
-            ),
-            format!("D={}", if point_name == "TEMP" { "A" } else { "M" }),
+            switch_base_address(&point_name),
+            switch_access_or_access_pointer(&point_name),
             format!("@{}", arg),
             String::from("A=D+A"),
             String::from("D=M"),
@@ -73,15 +67,8 @@ fn pop(target: String, arg: String) -> Vec<String> {
         vec![format!("// pop {} {}", target, arg)],
         dec_sp(),
         vec![
-            format!(
-                "@{}",
-                if point_name == "TEMP" {
-                    "5"
-                } else {
-                    point_name.as_str()
-                }
-            ),
-            format!("D={}", if point_name == "TEMP" { "A" } else { "M" }),
+            switch_base_address(&point_name),
+            switch_access_or_access_pointer(&point_name),
             format!("@{}", arg),
             String::from("D=D+A"),
             // save D
