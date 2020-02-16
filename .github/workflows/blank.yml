@@ -16,10 +16,7 @@ jobs:
 
       - name: Setup Rust
         uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-      
+
       - name: git clone
         uses: actions/checkout@v2
 
