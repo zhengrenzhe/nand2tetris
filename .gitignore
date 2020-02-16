@@ -4,3 +4,5 @@ assembler/target
 *.zip
 target
 compiler/**/*.txt
+compiler/**/*.hack
+compiler/**/*.asm
