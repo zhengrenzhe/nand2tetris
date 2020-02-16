@@ -13,6 +13,7 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
                 },
                 "add" => add(),
                 "eq" => eq(index),
+                "lt" => lt(index),
                 _ => vec![],
             };
             for code in codes {
@@ -63,6 +64,26 @@ fn eq(id: usize) -> Vec<String> {
             id,
             String::from("D;JEQ"),
             String::from("D;JNE"),
+            String::from("D=-1"),
+            String::from("D=0"),
+        ),
+        push_d_to_stack(),
+        sp_plus_plus(),
+    ]
+    .concat()
+}
+
+fn lt(id: usize) -> Vec<String> {
+    [
+        vec![String::from("// lt")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
+        // lt
+        vec![String::from("D=M-D")],
+        if_then_else(
+            id,
+            String::from("D;JLT"),
+            String::from("D;JGE"),
             String::from("D=-1"),
             String::from("D=0"),
         ),

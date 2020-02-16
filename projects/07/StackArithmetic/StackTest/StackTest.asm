@@ -165,6 +165,33 @@ M=D
 M=M+1
 
 
+// lt
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=M-D
+@label11_true_block
+D;JLT
+@label11_false_block
+D;JGE
+@label11_pass
+0;JEQ
+(label11_true_block)
+D=-1
+@label11_pass
+0;JEQ
+(label11_false_block)
+D=0
+(label11_pass)
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
 
 // push constant 891
@@ -187,11 +214,28 @@ M=D
 M=M+1
 
 
-
-
-// push constant 891
-@891
-D=A
+// lt
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=M-D
+@label14_true_block
+D;JLT
+@label14_false_block
+D;JGE
+@label14_pass
+0;JEQ
+(label14_true_block)
+D=-1
+@label14_pass
+0;JEQ
+(label14_false_block)
+D=0
+(label14_pass)
 @SP
 A=M
 M=D
@@ -209,6 +253,43 @@ M=D
 M=M+1
 
 
+// push constant 891
+@891
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+
+// lt
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=M-D
+@label17_true_block
+D;JLT
+@label17_false_block
+D;JGE
+@label17_pass
+0;JEQ
+(label17_true_block)
+D=-1
+@label17_pass
+0;JEQ
+(label17_false_block)
+D=0
+(label17_pass)
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
 
 // push constant 32767
