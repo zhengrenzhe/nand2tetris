@@ -11,7 +11,12 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
                     "constant" => push_constant(token.arg),
                     _ => vec![],
                 },
+                "and" => and(),
+                "or" => or(),
+                "not" => not(),
+                "neg" => neg(),
                 "add" => add(),
+                "sub" => sub(),
                 "eq" => eq(index),
                 "lt" => lt(index),
                 "gt" => gt(index),
@@ -35,7 +40,6 @@ fn push_constant(arg: String) -> Vec<String> {
             String::from("D=A"),
         ],
         push_d_to_stack(),
-        sp_plus_plus(),
     ]
     .concat()
 }
@@ -47,7 +51,6 @@ fn add() -> Vec<String> {
         pop_stack_to_m(),
         vec![String::from("D=D+M")],
         push_d_to_stack(),
-        sp_plus_plus(),
     ]
     .concat()
 }
@@ -67,7 +70,6 @@ fn eq(id: usize) -> Vec<String> {
             String::from("D=0"),
         ),
         push_d_to_stack(),
-        sp_plus_plus(),
     ]
     .concat()
 }
@@ -87,7 +89,6 @@ fn lt(id: usize) -> Vec<String> {
             String::from("D=0"),
         ),
         push_d_to_stack(),
-        sp_plus_plus(),
     ]
     .concat()
 }
@@ -107,7 +108,59 @@ fn gt(id: usize) -> Vec<String> {
             String::from("D=0"),
         ),
         push_d_to_stack(),
-        sp_plus_plus(),
+    ]
+    .concat()
+}
+
+fn sub() -> Vec<String> {
+    [
+        vec![String::from("// sub")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
+        vec![String::from("D=M-D")],
+        push_d_to_stack(),
+    ]
+    .concat()
+}
+
+fn neg() -> Vec<String> {
+    [
+        vec![String::from("// neg")],
+        pop_stack_to_d(),
+        vec![String::from("D=-D")],
+        push_d_to_stack(),
+    ]
+    .concat()
+}
+
+fn or() -> Vec<String> {
+    [
+        vec![String::from("// or")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
+        vec![String::from("D=D|M")],
+        push_d_to_stack(),
+    ]
+    .concat()
+}
+
+fn and() -> Vec<String> {
+    [
+        vec![String::from("// and")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
+        vec![String::from("D=D&M")],
+        push_d_to_stack(),
+    ]
+    .concat()
+}
+
+fn not() -> Vec<String> {
+    [
+        vec![String::from("// not")],
+        pop_stack_to_d(),
+        vec![String::from("D=!D")],
+        push_d_to_stack(),
     ]
     .concat()
 }

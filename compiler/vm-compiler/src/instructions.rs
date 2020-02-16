@@ -3,12 +3,14 @@ pub fn push_d_to_stack() -> Vec<String> {
         String::from("@SP"),
         String::from("A=M"),
         String::from("M=D"),
+        String::from("@SP"),
+        String::from("M=M+1"),
     ]
 }
 
-pub fn sp_plus_plus() -> Vec<String> {
-    vec![String::from("@SP"), String::from("M=M+1")]
-}
+//pub fn sp_plus_plus() -> Vec<String> {
+//    vec![String::from("@SP"), String::from("M=M+1")]
+//}
 
 pub fn pop_stack_to_d() -> Vec<String> {
     vec![

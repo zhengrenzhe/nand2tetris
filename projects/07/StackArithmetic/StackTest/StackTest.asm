@@ -495,10 +495,49 @@ M=D
 M=M+1
 
 
+// sub
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=M-D
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
 
+// neg
+@SP
+M=M-1
+A=M
+D=M
+D=-D
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
 
+// and
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=D&M
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
 
 // push constant 82
@@ -511,6 +550,31 @@ M=D
 M=M+1
 
 
+// or
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=D|M
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
 
+// not
+@SP
+M=M-1
+A=M
+D=M
+D=!D
+@SP
+A=M
+M=D
+@SP
+M=M+1
 
