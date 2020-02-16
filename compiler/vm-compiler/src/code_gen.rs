@@ -9,9 +9,13 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
             let codes = match token.command.as_str() {
                 "push" => match token.target.as_str() {
                     "constant" => push_constant(token.arg),
+                    "pointer" => push_pointer(token.arg),
                     _ => push(token.target, token.arg),
                 },
-                "pop" => pop(token.target, token.arg),
+                "pop" => match token.target.as_str() {
+                    "pointer" => pop_pointer(token.arg),
+                    _ => pop(token.target, token.arg),
+                },
                 "and" => and(),
                 "or" => or(),
                 "not" => not(),
@@ -83,6 +87,28 @@ fn pop(target: String, arg: String) -> Vec<String> {
             String::from("A=M"),
             String::from("M=D"),
         ],
+    ]
+    .concat()
+}
+
+fn pop_pointer(arg: String) -> Vec<String> {
+    [
+        pop_stack_to_d(),
+        vec![
+            format!("@{}", if arg == "0" { "THIS" } else { "THAT" }),
+            String::from("M=D"),
+        ],
+    ]
+    .concat()
+}
+
+fn push_pointer(arg: String) -> Vec<String> {
+    [
+        vec![
+            format!("@{}", if arg == "0" { "THIS" } else { "THAT" }),
+            String::from("D=M"),
+        ],
+        push_d_to_stack(),
     ]
     .concat()
 }
