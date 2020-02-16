@@ -7,6 +7,7 @@ use utils::io::{read_lines, write_lines};
 use utils::pre_process::pre_process;
 
 mod code_gen;
+mod instructions;
 mod lexical;
 
 fn main() {

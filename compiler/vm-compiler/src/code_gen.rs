@@ -1,3 +1,4 @@
+use crate::instructions::*;
 use crate::lexical::lexical;
 
 pub fn code_gen(lines: Vec<String>) -> Vec<String> {
@@ -27,74 +28,46 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
 // push constant 12
 // push number 12 to stack.
 fn push_constant(arg: String) -> Vec<String> {
-    vec![
-        format!("// push constant {}", arg),
-        format!("@{}", arg),
-        String::from("D=A"),
-        // push value stack
-        String::from("@SP"),
-        String::from("A=M"),
-        String::from("M=D"),
-        // sp += 1
-        String::from("@SP"),
-        String::from("M=M+1"),
+    [
+        vec![
+            format!("// push constant {}", arg),
+            format!("@{}", arg),
+            String::from("D=A"),
+        ],
+        push_d_to_stack(),
+        sp_plus_plus(),
     ]
+    .concat()
 }
 
 fn add() -> Vec<String> {
-    vec![
-        String::from("// add"),
-        // get first value
-        String::from("@SP"),   // A=0
-        String::from("M=M-1"), // M[0] = M[0] -1, *sp = 257
-        String::from("A=M"),   // A=257
-        String::from("D=M"),   // D=M[257] = 8
-        // get second value
-        String::from("@SP"),   // a=0
-        String::from("M=M-1"), // M[0] = M[0] -1, *sp = 256
-        String::from("A=M"),   // A=256
-        // add and set result
-        String::from("D=D+M"), // D = 8+M[256] = 8+7 = 15
-        String::from("@SP"),   // A = 0
-        String::from("A=M"),   // A = M[0] = 256
-        String::from("M=D"),   // M[256] = D = 15
-        // sp += 1
-        String::from("@SP"),   // A=0
-        String::from("M=M+1"), // M[0] = M[0] +1, *sp = 257
+    [
+        vec![String::from("// add")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
+        vec![String::from("D=D+M")],
+        push_d_to_stack(),
+        sp_plus_plus(),
     ]
+    .concat()
 }
 
 fn eq(id: usize) -> Vec<String> {
-    vec![
-        String::from("// eq"),
-        // get first value
-        String::from("@SP"),   // A=0
-        String::from("M=M-1"), // M[0] = M[0] -1, *sp = 257
-        String::from("A=M"),   // A=257
-        String::from("D=M"),   // D=M[257] = 8
-        // get second value
-        String::from("@SP"),   // a=0
-        String::from("M=M-1"), // M[0] = M[0] -1, *sp = 256
-        String::from("A=M"),   // A=256
+    [
+        vec![String::from("// eq")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
         // eq
-        String::from("D=D-M"),
-        format!("@label{}dIsZero", id),
-        String::from("D;JEQ"),
-        format!("@label{}dIsNotZero", id),
-        String::from("D;JNE"),
-        format!("(label{}dIsZero)", id),
-        String::from("D=-1"),
-        format!("@label{}end", id),
-        String::from("0;JEQ"),
-        format!("(label{}dIsNotZero)", id),
-        String::from("D=0"),
-        format!("(label{}end)", id),
-        // save
-        String::from("@SP"), // A = 0
-        String::from("A=M"), // A = M[0] = 256
-        String::from("M=D"), // M[256] = D = 15
-        // sp += 1
-        String::from("@SP"),   // A=0
-        String::from("M=M+1"), // M[0] = M[0] +1, *sp = 257
+        vec![String::from("D=D-M")],
+        if_then_else(
+            id,
+            String::from("D;JEQ"),
+            String::from("D;JNE"),
+            String::from("D=-1"),
+            String::from("D=0"),
+        ),
+        push_d_to_stack(),
+        sp_plus_plus(),
     ]
+    .concat()
 }
