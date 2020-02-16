@@ -9,8 +9,9 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
             let codes = match token.command.as_str() {
                 "push" => match token.target.as_str() {
                     "constant" => push_constant(token.arg),
-                    _ => vec![],
+                    _ => push(token.target, token.arg),
                 },
+                "pop" => pop(token.target, token.arg),
                 "and" => and(),
                 "or" => or(),
                 "not" => not(),
@@ -30,6 +31,73 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
     }
 
     result
+}
+
+fn map_arg(target: &str) -> String {
+    match target {
+        "argument" => String::from("ARG"),
+        "local" => String::from("LCL"),
+        "this" => String::from("THIS"),
+        "that" => String::from("THAT"),
+        "temp" => String::from("TEMP"),
+        _ => panic!(format!("target:{} not found", target)),
+    }
+}
+
+fn push(target: String, arg: String) -> Vec<String> {
+    let point_name = map_arg(&target);
+    [
+        vec![
+            format!("// push {} {}", target, arg),
+            format!(
+                "@{}",
+                if point_name == "TEMP" {
+                    "5"
+                } else {
+                    point_name.as_str()
+                }
+            ),
+            format!("D={}", if point_name == "TEMP" { "A" } else { "M" }),
+            format!("@{}", arg),
+            String::from("A=D+A"),
+            String::from("D=M"),
+        ],
+        push_d_to_stack(),
+    ]
+    .concat()
+}
+
+fn pop(target: String, arg: String) -> Vec<String> {
+    let point_name = map_arg(&target);
+    [
+        vec![format!("// pop {} {}", target, arg)],
+        dec_sp(),
+        vec![
+            format!(
+                "@{}",
+                if point_name == "TEMP" {
+                    "5"
+                } else {
+                    point_name.as_str()
+                }
+            ),
+            format!("D={}", if point_name == "TEMP" { "A" } else { "M" }),
+            format!("@{}", arg),
+            String::from("D=D+A"),
+            // save D
+            String::from("@R13"),
+            String::from("M=D"),
+            // get value to save
+            String::from("@SP"),
+            String::from("AD=M"),
+            String::from("D=M"),
+            // save to M[R13]
+            String::from("@R13"),
+            String::from("A=M"),
+            String::from("M=D"),
+        ],
+    ]
+    .concat()
 }
 
 fn push_constant(arg: String) -> Vec<String> {
