@@ -28,25 +28,37 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
 fn push_constant(arg: String) -> Vec<String> {
     vec![
         format!("// push constant {}", arg),
-        // *sp = i
         format!("@{}", arg),
         String::from("D=A"),
+        // push value stack
         String::from("@SP"),
+        String::from("A=M"),
         String::from("M=D"),
         // sp += 1
-        String::from("A=A+1"),
+        String::from("@SP"),
+        String::from("M=M+1"),
     ]
 }
 
 fn add() -> Vec<String> {
     vec![
         String::from("// add"),
-        String::from("@SP"),
-        String::from("A=A-1"),
-        String::from("D=M"),
-        String::from("A=A-1"),
-        String::from("D=D+M"),
-        String::from("M=D"),
-        String::from("A=A+1"),
+        // get first value
+        String::from("@SP"),   // A=0
+        String::from("M=M-1"), // M[0] = M[0] -1, *sp = 257
+        String::from("A=M"),   // A=257
+        String::from("D=M"),   // D=M[257] = 8
+        // get second value
+        String::from("@SP"),   // a=0
+        String::from("M=M-1"), // M[0] = M[0] -1, *sp = 256
+        String::from("A=M"),   // A=256
+        // add and set result
+        String::from("D=D+M"), // D = 8+M[256] = 8+7 = 15
+        String::from("@SP"),   // A = 0
+        String::from("A=M"),   // A = M[0] = 256
+        String::from("M=D"),   // M[256] = D = 15
+        // sp += 1
+        String::from("@SP"),   // A=0
+        String::from("M=M+1"), // M[0] = M[0] +1, *sp = 257
     ]
 }
