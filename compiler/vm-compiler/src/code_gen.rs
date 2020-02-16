@@ -14,6 +14,7 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
                 "add" => add(),
                 "eq" => eq(index),
                 "lt" => lt(index),
+                "gt" => gt(index),
                 _ => vec![],
             };
             for code in codes {
@@ -26,8 +27,6 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
     result
 }
 
-// push constant 12
-// push number 12 to stack.
 fn push_constant(arg: String) -> Vec<String> {
     [
         vec![
@@ -84,6 +83,26 @@ fn lt(id: usize) -> Vec<String> {
             id,
             String::from("D;JLT"),
             String::from("D;JGE"),
+            String::from("D=-1"),
+            String::from("D=0"),
+        ),
+        push_d_to_stack(),
+        sp_plus_plus(),
+    ]
+    .concat()
+}
+
+fn gt(id: usize) -> Vec<String> {
+    [
+        vec![String::from("// lt")],
+        pop_stack_to_d(),
+        pop_stack_to_m(),
+        // gt
+        vec![String::from("D=M-D")],
+        if_then_else(
+            id,
+            String::from("D;JGT"),
+            String::from("D;JLE"),
             String::from("D=-1"),
             String::from("D=0"),
         ),
