@@ -10,3 +10,4 @@ compiler/vm-compiler/**/*.txt
 compiler/vm-compiler/**/*.hack
 compiler/vm-compiler/**/*.asm
 compiler/VMTranslator
+.vscode
