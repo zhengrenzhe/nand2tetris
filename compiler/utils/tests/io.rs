@@ -35,9 +35,7 @@ fn test_read_lines() {
 
     match read_result {
         Ok(file) => {
-            assert_eq!(file.file_name, String::from("test.txt"));
             assert_eq!(file.stem, String::from("test"));
-            assert_eq!(file.extension, String::from("txt"));
             assert_eq!(file.lines.len(), lines.len());
             for (index, content) in file.lines.iter().enumerate() {
                 assert_eq!(*content, lines[index]);

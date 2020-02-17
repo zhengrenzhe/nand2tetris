@@ -30,7 +30,10 @@ fn run() -> Result<(), Error> {
 
         let result_codes = code_gen(clean_codes);
 
-        write_lines(&result_codes, format!("{}.asm", file.stem).as_str())?;
+        write_lines(
+            &result_codes,
+            format!("{}/{}.asm", file.output_dir, file.stem).as_str(),
+        )?;
     }
 
     Ok(())
