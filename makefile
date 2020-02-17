@@ -19,7 +19,7 @@ define call_tool
 	done
 endef
 
-all: project1 project2 project3 project4 project5 project7
+all: project1 project2 project3 project4 project5 project7 clean
 
 project1: $(PROJ_1)/*.tst
 	@echo "${Blue}Testing $@... ${NC}"
@@ -53,3 +53,13 @@ project7:
 	for file in $(PROJ_7)/**/**/{*Test,*Add}.tst; do \
 		$(CPUEmulator) $${file} ;\
 	done
+
+clean:
+	@rm $(PROJ_7)/**/**/*.out
+	@rm $(PROJ_7)/**/**/*.asm
+	@rm $(PROJ_5)/*.out
+	@rm $(PROJ_4)/**/*.out
+	@rm $(PROJ_4)/**/*.hack
+	@rm $(PROJ_3)/**/*.out
+	@rm $(PROJ_2)/*.out
+	@rm $(PROJ_1)/*.out
