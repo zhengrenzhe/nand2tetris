@@ -50,7 +50,7 @@ project7:
 	for file in $(PROJ_7)/**/**/*.vm; do \
 		cargo run -p vm-compiler $${file} ;\
 	done ;\
-	for file in $(PROJ_7)/**/{*Test,*Add}.tst; do \
+	for file in $(PROJ_7)/**/**/{*Test,*Add}.tst; do \
 		$(CPUEmulator) $${file} ;\
 	done
 
