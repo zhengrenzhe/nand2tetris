@@ -35,9 +35,9 @@ project3: $(PROJ_3)/**/*.tst
 
 project4:
 	@echo "${Blue}Testing $@... ${NC}"
-	$(call call_tool, $(Assembler), $(PROJ_4)/fill/Fill.asm) > /dev/null
+	$(call call_tool, $(Assembler), $(PROJ_4)/fill/Fill.asm)
 	$(call call_tool, $(CPUEmulator), $(PROJ_4)/fill/FillAutomatic.tst)
-	$(call call_tool, $(Assembler), $(PROJ_4)/mult/Mult.asm) > /dev/null
+	$(call call_tool, $(Assembler), $(PROJ_4)/mult/Mult.asm)
 	$(call call_tool, $(CPUEmulator), $(PROJ_4)/mult/Mult.tst)
 
 project5: $(PROJ_5)/CPU-external.tst $(PROJ_5)/CPU.tst $(PROJ_5)/ComputerAdd-external.tst $(PROJ_5)/ComputerAdd.tst $(PROJ_5)/ComputerMax-external.tst $(PROJ_5)/ComputerMax.tst $(PROJ_5)/ComputerRect-external.tst $(PROJ_5)/ComputerRect.tst
