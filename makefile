@@ -48,9 +48,9 @@ project7:
 	@echo "${Blue}Testing $@... ${NC}"
 	@cd compiler ;\
 	for file in $(PROJ_7)/**/**/*.vm; do \
-		cargo run -p vm-compiler $${file} ;\
+		cargo -q run -p vm-compiler $${file} ;\
 	done ;\
-	for file in $(PROJ_7)/**/**/{*Test,*Add}.tst; do \
+	for file in $(PROJ_7)/MemoryAccess/BasicTest/BasicTest.tst $(PROJ_7)/MemoryAccess/PointerTest/PointerTest.tst $(PROJ_7)/MemoryAccess/StaticTest/StaticTest.tst $(PROJ_7)/StackArithmetic/StackTest/StackTest.tst $(PROJ_7)/StackArithmetic/SimpleAdd/SimpleAdd.tst; do \
 		$(CPUEmulator) $${file} ;\
 	done
 
