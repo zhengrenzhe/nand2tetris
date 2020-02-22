@@ -28,6 +28,8 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
                 "label" => label(token.target),
                 "goto" => goto(token.target),
                 "if-goto" => if_goto(token.target),
+                "function" => function(token.target, token.arg),
+                "return" => ret(),
                 _ => vec![],
             };
             for code in codes {
@@ -38,6 +40,100 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
     }
 
     result
+}
+
+fn function(target: String, arg: String) -> Vec<String> {
+    let arg_count: usize = arg.parse().unwrap();
+    [
+        vec![
+            format!("// function {} {}", target, arg),
+            format!("({})", target),
+        ],
+        // push n args to stack
+        (0..arg_count)
+            .enumerate()
+            .map(|_| {
+                [
+                    vec![String::from("@0"), String::from("D=A")],
+                    push_d_to_stack(),
+                ]
+                .concat()
+            })
+            .collect::<Vec<Vec<String>>>()
+            .concat(),
+        // set LCL
+        vec![
+            // save arg to R13
+            format!("@{}", arg),
+            String::from("D=A"),
+            String::from("@R13"),
+            String::from("M=D"),
+            // LCL = SP - arg
+            String::from("@SP"),
+            String::from("D=M"),
+            String::from("@R13"),
+            String::from("D=D-M"),
+            String::from("@LCL"),
+            String::from("M=D"),
+        ],
+    ]
+    .concat()
+}
+
+fn ret() -> Vec<String> {
+    [
+        vec![
+            String::from("// return"),
+            // endFrame = LCL
+            String::from("@LCL"),
+            String::from("D=M"),
+            String::from("@endFrame"),
+            String::from("M=D"),
+            // retAddr = *(endFrame-5)
+            String::from("@5"),
+            String::from("D=D-A"),
+            String::from("A=D"),
+            String::from("D=M"),
+            String::from("@retAddr"),
+            String::from("M=D"),
+        ],
+        // pop value to *ARG
+        pop_stack_to_d(),
+        vec![
+            String::from("@ARG"),
+            String::from("A=M"),
+            String::from("M=D"),
+        ],
+        // SP=ARG+1
+        vec![
+            String::from("D=A+1"),
+            String::from("@SP"),
+            String::from("M=D"),
+        ],
+        // restore THAT, THIS, ARG, LCL
+        restore_frame("THAT", "1"),
+        restore_frame("THIS", "2"),
+        restore_frame("ARG", "3"),
+        restore_frame("LCL", "4"),
+        vec![
+            String::from("@retAddr"),
+            String::from("A=M"),
+            String::from("0;JEQ"),
+        ],
+    ]
+    .concat()
+}
+
+fn restore_frame(target: &str, diff: &str) -> Vec<String> {
+    vec![
+        format!("@{}", diff),
+        String::from("D=A"),
+        String::from("@endFrame"),
+        String::from("A=M-D"),
+        String::from("D=M"),
+        format!("@{}", target),
+        String::from("M=D"),
+    ]
 }
 
 fn map_arg(target: &str) -> String {
