@@ -9,6 +9,7 @@ PROJ_3 = $(abspath ./projects/03)
 PROJ_4 = $(abspath ./projects/04)
 PROJ_5 = $(abspath ./projects/05)
 PROJ_7 = $(abspath ./projects/07)
+PROJ_8 = $(abspath ./projects/08)
 
 Blue=\033[1;34m
 NC=\033[0m
@@ -19,7 +20,7 @@ define call_tool
 	done
 endef
 
-all: project1 project2 project3 project4 project5 project7 clean
+all: project1 project2 project3 project4 project5 project7 project8 clean
 
 project1: $(PROJ_1)/*.tst
 	@echo "${Blue}Testing $@... ${NC}"
@@ -54,7 +55,19 @@ project7:
 		$(CPUEmulator) $${file} ;\
 	done
 
+project8:
+	@echo "${Blue}Testing $@... ${NC}"
+	@cd compiler ;\
+	for file in $(PROJ_8)/**/**/*.vm; do \
+		cargo -q run -p vm-compiler $${file} ;\
+	done ;\
+	for file in $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.tst $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.tst ; do \
+		$(CPUEmulator) $${file} ;\
+	done
+
 clean:
+	@rm $(PROJ_8)/**/**/*.out
+	@rm $(PROJ_8)/**/**/*.asm
 	@rm $(PROJ_7)/**/**/*.out
 	@rm $(PROJ_7)/**/**/*.asm
 	@rm $(PROJ_5)/*.out

@@ -25,6 +25,9 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
                 "eq" => eq(index),
                 "lt" => lt(index),
                 "gt" => gt(index),
+                "label" => label(token.target),
+                "goto" => goto(token.target),
+                "if-goto" => if_goto(token.target),
                 _ => vec![],
             };
             for code in codes {
@@ -242,6 +245,30 @@ fn not() -> Vec<String> {
         pop_stack_to_d(),
         vec![String::from("D=!D")],
         push_d_to_stack(),
+    ]
+    .concat()
+}
+
+fn label(label_name: String) -> Vec<String> {
+    vec![
+        format!("// label {}", label_name),
+        format!("({})", label_name),
+    ]
+}
+
+fn goto(target: String) -> Vec<String> {
+    vec![
+        format!("// goto {}", target),
+        format!("@{}", target),
+        String::from("0;JEQ"),
+    ]
+}
+
+fn if_goto(target: String) -> Vec<String> {
+    [
+        vec![format!("// if-goto {}", target)],
+        pop_stack_to_d(),
+        vec![format!("@{}", target), String::from("D;JNE")],
     ]
     .concat()
 }
