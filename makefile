@@ -58,10 +58,13 @@ project7:
 project8:
 	@echo "${Blue}Testing $@... ${NC}"
 	@cd compiler ;\
-	for file in $(PROJ_8)/**/**/*.vm; do \
-		cargo -q run -p vm-compiler $${file} ;\
-	done ;\
-	for file in $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.tst $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.tst ; do \
+	cargo -q run -p vm-compiler $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.vm ;\
+	cargo -q run -p vm-compiler $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.vm;\
+	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/SimpleFunction/SimpleFunction.vm;\
+	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/NestedCall;\
+	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/FibonacciElement;\
+	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/StaticsTest;\
+	for file in $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.tst $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.tst $(PROJ_8)/FunctionCalls/SimpleFunction/SimpleFunction.tst $(PROJ_8)/FunctionCalls/NestedCall/NestedCall.tst $(PROJ_8)/FunctionCalls/FibonacciElement/FibonacciElement.tst $(PROJ_8)/FunctionCalls/StaticsTest/StaticsTest.tst ; do \
 		$(CPUEmulator) $${file} ;\
 	done
 
