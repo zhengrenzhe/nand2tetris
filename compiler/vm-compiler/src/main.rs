@@ -28,7 +28,7 @@ fn run() -> Result<(), Error> {
 
         let clean_codes = pre_process(file.lines, false);
 
-        let result_codes = code_gen(clean_codes);
+        let result_codes = code_gen(clean_codes, file.insert_bootstrap);
 
         write_lines(
             &result_codes,

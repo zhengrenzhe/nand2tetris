@@ -7,25 +7,24 @@ pub struct File {
     pub stem: String,
     pub lines: Vec<String>,
     pub output_dir: String,
+    pub insert_bootstrap: bool,
 }
 
 pub fn read_lines(file_path: &str) -> Result<File, Error> {
     let file_path_target = Path::new(file_path);
     let mut output_dir = String::from("./");
     let mut content = String::new();
+    let mut insert_bootstrap = false;
 
     if file_path_target.is_dir() {
         output_dir = String::from(file_path_target.to_str().unwrap());
+        insert_bootstrap = true;
         let mut vm_files: Vec<String> = vec![];
         for item in file_path_target.read_dir().expect("read folder error") {
             if let Ok(child) = item {
                 let child_file_path = String::from(child.path().to_str().unwrap());
                 if child_file_path.contains(".vm") {
-                    if child_file_path.contains("Sys.vm") {
-                        vm_files.insert(0, child_file_path);
-                    } else {
-                        vm_files.push(child_file_path)
-                    }
+                    vm_files.push(child_file_path)
                 }
             }
         }
@@ -59,6 +58,7 @@ pub fn read_lines(file_path: &str) -> Result<File, Error> {
         lines,
         stem,
         output_dir,
+        insert_bootstrap,
     })
 }
 

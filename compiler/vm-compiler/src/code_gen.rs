@@ -1,8 +1,12 @@
 use crate::instructions::*;
 use crate::lexical::lexical;
 
-pub fn code_gen(lines: Vec<String>) -> Vec<String> {
+pub fn code_gen(mut lines: Vec<String>, is_insert_bootstrap: bool) -> Vec<String> {
     let mut result: Vec<String> = vec![];
+
+    if is_insert_bootstrap {
+        lines.insert(0, String::from("call Sys.init 0"));
+    }
 
     for (index, line) in lines.iter().enumerate() {
         if let Some(token) = lexical(line) {
@@ -28,6 +32,7 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
                 "label" => label(token.target),
                 "goto" => goto(token.target),
                 "if-goto" => if_goto(token.target),
+                "call" => call(token.target, token.arg),
                 "function" => function(token.target, token.arg),
                 "return" => ret(),
                 _ => vec![],
@@ -39,7 +44,62 @@ pub fn code_gen(lines: Vec<String>) -> Vec<String> {
         result.push(String::from("\n"));
     }
 
+    if is_insert_bootstrap {
+        result.insert(0, String::from("M=D"));
+        result.insert(0, String::from("@SP"));
+        result.insert(0, String::from("D=A"));
+        result.insert(0, String::from("@256"));
+    }
+
     result
+}
+
+fn call(target: String, arg: String) -> Vec<String> {
+    [
+        // push return address to stack
+        vec![
+            format!("// call {} {}", target, arg),
+            format!("@{}callerReturnAddress", target),
+            String::from("D=A"),
+        ],
+        push_d_to_stack(),
+        // save frame
+        save_frame("LCL"),
+        save_frame("ARG"),
+        save_frame("THIS"),
+        save_frame("THAT"),
+        // set ARG to position of the first argument(SP-5-arg)
+        vec![
+            String::from("@SP"),
+            String::from("D=M"),
+            String::from("@5"),
+            String::from("D=D-A"),
+            format!("@{}", arg),
+            String::from("D=D-A"),
+            String::from("@ARG"),
+            String::from("M=D"),
+        ],
+        // set LCL to SP
+        vec![
+            String::from("@SP"),
+            String::from("D=M"),
+            String::from("@LCL"),
+            String::from("M=D"),
+        ],
+        // goto function
+        vec![format!("@{}", target), String::from("0;JEQ")],
+        // set return address label
+        vec![format!("({}callerReturnAddress)", target)],
+    ]
+    .concat()
+}
+
+fn save_frame(target: &str) -> Vec<String> {
+    [
+        vec![format!("@{}", target), String::from("D=M")],
+        push_d_to_stack(),
+    ]
+    .concat()
 }
 
 fn function(target: String, arg: String) -> Vec<String> {
