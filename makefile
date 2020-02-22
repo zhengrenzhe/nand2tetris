@@ -63,8 +63,7 @@ project8:
 	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/SimpleFunction/SimpleFunction.vm;\
 	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/NestedCall;\
 	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/FibonacciElement;\
-	cargo -q run -p vm-compiler $(PROJ_8)/FunctionCalls/StaticsTest;\
-	for file in $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.tst $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.tst $(PROJ_8)/FunctionCalls/SimpleFunction/SimpleFunction.tst $(PROJ_8)/FunctionCalls/NestedCall/NestedCall.tst $(PROJ_8)/FunctionCalls/FibonacciElement/FibonacciElement.tst $(PROJ_8)/FunctionCalls/StaticsTest/StaticsTest.tst ; do \
+	for file in $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.tst $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.tst $(PROJ_8)/FunctionCalls/SimpleFunction/SimpleFunction.tst $(PROJ_8)/FunctionCalls/NestedCall/NestedCall.tst $(PROJ_8)/FunctionCalls/FibonacciElement/FibonacciElement.tst ; do \
 		$(CPUEmulator) $${file} ;\
 	done
 

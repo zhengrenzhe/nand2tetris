@@ -1,12 +1,20 @@
-pub fn switch_base_address(point_name: &str) -> String {
+pub fn switch_base_address(point_name: &str, current_function: &str, arg: &str) -> String {
     format!(
         "@{}",
         if point_name == "TEMP" {
-            "5"
+            String::from("5")
         } else if point_name == "STATIC" {
-            "16"
+            if current_function.contains('.') {
+                format!(
+                    "{}.{}",
+                    current_function.split('.').collect::<Vec<&str>>()[0],
+                    arg
+                )
+            } else {
+                String::from("16")
+            }
         } else {
-            point_name
+            String::from(point_name)
         }
     )
 }

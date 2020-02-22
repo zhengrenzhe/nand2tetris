@@ -4,6 +4,8 @@ use crate::lexical::lexical;
 pub fn code_gen(mut lines: Vec<String>, is_insert_bootstrap: bool) -> Vec<String> {
     let mut result: Vec<String> = vec![];
 
+    let mut current_function = String::new();
+
     if is_insert_bootstrap {
         lines.insert(0, String::from("call Sys.init 0"));
     }
@@ -14,11 +16,11 @@ pub fn code_gen(mut lines: Vec<String>, is_insert_bootstrap: bool) -> Vec<String
                 "push" => match token.target.as_str() {
                     "constant" => push_constant(token.arg),
                     "pointer" => push_pointer(token.arg),
-                    _ => push(token.target, token.arg),
+                    _ => push(token.target, token.arg, &current_function),
                 },
                 "pop" => match token.target.as_str() {
                     "pointer" => pop_pointer(token.arg),
-                    _ => pop(token.target, token.arg),
+                    _ => pop(token.target, token.arg, &current_function),
                 },
                 "and" => and(),
                 "or" => or(),
@@ -32,9 +34,15 @@ pub fn code_gen(mut lines: Vec<String>, is_insert_bootstrap: bool) -> Vec<String
                 "label" => label(token.target),
                 "goto" => goto(token.target),
                 "if-goto" => if_goto(token.target),
-                "call" => call(token.target, token.arg),
-                "function" => function(token.target, token.arg),
-                "return" => ret(),
+                "call" => call(index, token.target, token.arg),
+                "function" => {
+                    current_function = token.target.clone();
+                    function(token.target, token.arg)
+                }
+                "return" => {
+                    current_function = String::new();
+                    ret()
+                }
                 _ => vec![],
             };
             for code in codes {
@@ -54,12 +62,12 @@ pub fn code_gen(mut lines: Vec<String>, is_insert_bootstrap: bool) -> Vec<String
     result
 }
 
-fn call(target: String, arg: String) -> Vec<String> {
+fn call(index: usize, target: String, arg: String) -> Vec<String> {
     [
         // push return address to stack
         vec![
             format!("// call {} {}", target, arg),
-            format!("@{}callerReturnAddress", target),
+            format!("@{}{}ReturnAddress", index, target),
             String::from("D=A"),
         ],
         push_d_to_stack(),
@@ -89,7 +97,7 @@ fn call(target: String, arg: String) -> Vec<String> {
         // goto function
         vec![format!("@{}", target), String::from("0;JEQ")],
         // set return address label
-        vec![format!("({}callerReturnAddress)", target)],
+        vec![format!("({}{}ReturnAddress)", index, target)],
     ]
     .concat()
 }
@@ -121,21 +129,6 @@ fn function(target: String, arg: String) -> Vec<String> {
             })
             .collect::<Vec<Vec<String>>>()
             .concat(),
-        // set LCL
-        vec![
-            // save arg to R13
-            format!("@{}", arg),
-            String::from("D=A"),
-            String::from("@R13"),
-            String::from("M=D"),
-            // LCL = SP - arg
-            String::from("@SP"),
-            String::from("D=M"),
-            String::from("@R13"),
-            String::from("D=D-M"),
-            String::from("@LCL"),
-            String::from("M=D"),
-        ],
     ]
     .concat()
 }
@@ -208,12 +201,12 @@ fn map_arg(target: &str) -> String {
     }
 }
 
-fn push(target: String, arg: String) -> Vec<String> {
+fn push(target: String, arg: String, current_function: &str) -> Vec<String> {
     let point_name = map_arg(&target);
     [
         vec![
             format!("// push {} {}", target, arg),
-            switch_base_address(&point_name),
+            switch_base_address(&point_name, current_function, &arg),
             switch_access_or_access_pointer(&point_name),
             format!("@{}", arg),
             String::from("A=D+A"),
@@ -224,13 +217,13 @@ fn push(target: String, arg: String) -> Vec<String> {
     .concat()
 }
 
-fn pop(target: String, arg: String) -> Vec<String> {
+fn pop(target: String, arg: String, current_function: &str) -> Vec<String> {
     let point_name = map_arg(&target);
     [
         vec![format!("// pop {} {}", target, arg)],
         dec_sp(),
         vec![
-            switch_base_address(&point_name),
+            switch_base_address(&point_name, current_function, &arg),
             switch_access_or_access_pointer(&point_name),
             format!("@{}", arg),
             String::from("D=D+A"),
