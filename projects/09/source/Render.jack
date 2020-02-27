@@ -1,0 +1,22 @@
+class Render {
+    function void rect(int x, int y, int width, int height) {
+        var int x, y, rightX, bottomY;
+
+        let rightX = x + width;
+        let bottomY = y + height;
+
+        // top border
+        do Screen.drawLine(x, y, rightX, y);
+
+        // bottom border
+        do Screen.drawLine(x, bottomY, rightX, bottomY);
+
+        // left border
+        do Screen.drawLine(x, y, x, bottomY);
+
+        // right border
+        do Screen.drawLine(rightX, y, rightX, bottomY);
+
+        return;
+    }
+}

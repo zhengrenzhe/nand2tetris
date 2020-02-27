@@ -1,6 +1,19 @@
 class Gui {
-    function void renderFramework () {
-        do Output.printString("Hello world!");
+    function void drawFramework () {
+        var int viewWidth, viewHeight, padding, displayAreaHeight;
+
+        let viewWidth = 511;
+        let viewHeight = 255;
+        let padding = 4;
+        let displayAreaHeight = 60;
+
+        // draw root border
+        do Render.rect(padding, padding, viewWidth - (2 * padding), viewHeight - (2 * padding));
+
+        // draw result display split
+        do Screen.drawLine(padding, padding + displayAreaHeight, viewWidth - padding, padding + displayAreaHeight);
+
+        // draw keyboard
         return;
     }
 }

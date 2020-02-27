@@ -1,6 +1,6 @@
 class Calculator {
     function void run () {
-        do Gui.renderFramework();
+        do Gui.drawFramework();
         return;
     }
 }
