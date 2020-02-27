@@ -1,11 +1,62 @@
 class Gui {
-    function void drawFramework () {
-        var int viewWidth, viewHeight, padding, displayAreaHeight;
+    static int viewWidth, viewHeight, padding, displayAreaHeight;
+    static int columns, rows, buttonCount, buttonWidth, buttonHeight, buttonMargin;
+    static Array buttons;
 
+    // initial all constant
+    function void init () {
+        // screen width
         let viewWidth = 511;
+
+        // screen height
         let viewHeight = 255;
+
+        // screen inner padding
         let padding = 4;
+
+        // result display area height
         let displayAreaHeight = 60;
+
+        // how many columns and rows of buttons
+        let columns = 4;
+        let rows = 5;
+        let buttonCount = columns * rows;
+        
+        // button margin
+        let buttonMargin = 8;
+
+        // button width and height
+        let buttonWidth = (viewWidth - (2 * padding) - ((columns + 1) * buttonMargin)) / columns;
+        let buttonHeight = (viewHeight - (2 * padding) - displayAreaHeight - ((rows + 1) * buttonMargin)) / rows;
+
+        // all buttons
+        let buttons = Array.new(buttonCount);
+        let buttons[0] = "LeftParentheses";
+        let buttons[1] = "RightParentheses";
+        let buttons[2] = "Factorial";
+        let buttons[3] = "AC";
+        let buttons[4] = "7";
+        let buttons[5] = "8";
+        let buttons[6] = "9";
+        let buttons[7] = "Div";
+        let buttons[8] = "4";
+        let buttons[9] = "5";
+        let buttons[10] = "6";
+        let buttons[11] = "Multi";
+        let buttons[12] = "1";
+        let buttons[13] = "2";
+        let buttons[14] = "3";
+        let buttons[15] = "Sub";
+        let buttons[16] = "Opposite";
+        let buttons[17] = "0";
+        let buttons[18] = "equal";
+        let buttons[19] = "Plus";
+        
+        return;
+    }
+
+    function void drawFramework () {
+        do Gui.init();
 
         // draw root border
         do Render.rect(padding, padding, viewWidth - (2 * padding), viewHeight - (2 * padding));
@@ -14,6 +65,30 @@ class Gui {
         do Screen.drawLine(padding, padding + displayAreaHeight, viewWidth - padding, padding + displayAreaHeight);
 
         // draw keyboard
+        do Gui.drawKeyBoard();
+
+        return;
+    }
+
+    function void drawKeyBoard () {
+        var int i, x, y, row, col;
+        let i = 0;
+        let row = 0;
+        let col = 0;
+        while (i < buttonCount) {
+            let x = padding + ((col + 1) * buttonMargin) + (col * buttonWidth);
+            let y = padding + displayAreaHeight + ((row + 1) * buttonMargin) + (row * buttonHeight);
+
+            do Render.rect(x, y, buttonWidth + 2, buttonHeight + 4);
+
+            if (col < (columns - 1)) {
+                let col = col + 1;
+            } else {
+                let col = 0;
+                let row = row + 1;
+            }
+            let i = i + 1;
+        }
         return;
     }
 }
