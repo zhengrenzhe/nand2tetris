@@ -1,0 +1,6 @@
+class Gui {
+    function void renderFramework () {
+        do Output.printString("Hello world!");
+        return;
+    }
+}
