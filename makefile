@@ -2,6 +2,7 @@ HardwareSimulator = $(abspath ./tools/HardwareSimulator.sh)
 CPUEmulator = $(abspath ./tools/CPUEmulator.sh)
 Assembler = $(abspath ./tools/Assembler.sh)
 VMEmulator = $(abspath ./tools/VMEmulator.sh)
+JackCompiler = $(abspath ./tools/JackCompiler.sh)
 
 PROJ_1 = $(abspath ./projects/01)
 PROJ_2 = $(abspath ./projects/02)
@@ -10,6 +11,7 @@ PROJ_4 = $(abspath ./projects/04)
 PROJ_5 = $(abspath ./projects/05)
 PROJ_7 = $(abspath ./projects/07)
 PROJ_8 = $(abspath ./projects/08)
+PROJ_9 = $(abspath ./projects/09)
 
 Blue=\033[1;34m
 NC=\033[0m
@@ -66,6 +68,9 @@ project8:
 	for file in $(PROJ_8)/ProgramFlow/BasicLoop/BasicLoop.tst $(PROJ_8)/ProgramFlow/FibonacciSeries/FibonacciSeries.tst $(PROJ_8)/FunctionCalls/SimpleFunction/SimpleFunction.tst $(PROJ_8)/FunctionCalls/NestedCall/NestedCall.tst $(PROJ_8)/FunctionCalls/FibonacciElement/FibonacciElement.tst ; do \
 		$(CPUEmulator) $${file} ;\
 	done
+
+project9:
+	$(call call_tool, $(JackCompiler), $(PROJ_9)/source)
 
 clean:
 	@rm $(PROJ_8)/**/**/*.out
