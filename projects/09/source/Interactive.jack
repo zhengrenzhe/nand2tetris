@@ -7,7 +7,63 @@ class Interactive {
     }
 
     function void onKeyPress(char keyCode) {
-        do list.append(keyCode);
+        // from 0 to 9
+        if (keyCode > 47){
+            if (keyCode < 58){
+                do list.append(keyCode);
+            }
+        }
+
+        // =
+        if (keyCode = 61){
+            do list.append(keyCode);
+        }
+        
+        // +
+        if(keyCode = 43){
+            do list.append(keyCode);
+        }
+
+        // -
+        if(keyCode = 45){
+            do list.append(keyCode);
+        }
+
+        // *
+        if(keyCode = 42){
+            do list.append(keyCode);
+        }
+
+        // /
+        if(keyCode = 47){
+            do list.append(keyCode);
+        }
+
+        // (
+        if(keyCode = 40){
+            do list.append(keyCode);
+        }
+
+        // )
+        if(keyCode = 41){
+            do list.append(keyCode);
+        }
+
+        // esc for ac button
+        if(keyCode = 140){
+            do list.append(keyCode);
+        }
+
+        // ! for n!
+        if(keyCode = 33){
+            do list.append(keyCode);
+        }
+
+        // opposite
+        if(keyCode = 64){
+            do list.append(keyCode);
+        }
+
         do list.log();
 
         return;
