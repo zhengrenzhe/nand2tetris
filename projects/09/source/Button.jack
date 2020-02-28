@@ -1,172 +1,85 @@
 class Button {
     function void draw(int index, int x, int y){
-
         if (index = 0) {
-            do Button.LeftParentheses(x, y);
+            do Button.Seven(x, y);
             return;
         }
         
         if (index = 1) {
-            do Button.RightParentheses(x, y);
+            do Button.Eight(x, y);
             return;
         }
         
         if (index = 2) {
-            do Button.Factorial(x, y);
-            return;
-        }
-
-        if (index = 3) {
-            do Button.AC(x, y);
-            return;
-        }
-
-        if (index = 4) {
-            do Button.Seven(x, y);
-            return;
-        }
-
-        if (index = 5) {
-            do Button.Eight(x, y);
-            return;
-        }
-
-        if (index = 6) {
             do Button.Nine(x, y);
             return;
         }
 
-        if (index = 7) {
+        if (index = 3) {
             do Button.Div(x, y);
             return;
         }
 
-        if (index = 8) {
-            do Button.Four(x, y);
-            return;
-        }
-
-        if (index = 9) {
-            do Button.Five(x, y);
-            return;
-        }
-
-        if (index = 10) {
+        if (index = 4) {
             do Button.Six(x, y);
             return;
         }
 
-        if (index = 11) {
+        if (index = 5) {
+            do Button.Five(x, y);
+            return;
+        }
+
+        if (index = 6) {
+            do Button.Four(x, y);
+            return;
+        }
+
+        if (index = 7) {
             do Button.Multi(x, y);
             return;
         }
 
-        if (index = 12) {
-            do Button.One(x, y);
-            return;
-        }
-
-        if (index = 13) {
-            do Button.Two(x, y);
-            return;
-        }
-
-        if (index = 14) {
+        if (index = 8) {
             do Button.Three(x, y);
             return;
         }
 
-        if (index = 15) {
+        if (index = 9) {
+            do Button.Two(x, y);
+            return;
+        }
+
+        if (index = 10) {
+            do Button.One(x, y);
+            return;
+        }
+
+        if (index = 11) {
             do Button.Sub(x, y);
             return;
         }
 
-        if (index = 16) {
-            do Button.Opposite(x, y);
+        if (index = 12) {
+            do Button.AC(x, y);
             return;
         }
 
-        if (index = 17) {
+        if (index = 13) {
             do Button.Zero(x, y);
             return;
         }
 
-        if (index = 18) {
+        if (index = 14) {
             do Button.Equal(x, y);
             return;
         }
 
-        if (index = 19) {
+        if (index = 15) {
             do Button.Plus(x, y);
             return;
         }
 
-        return;
-    }
-
-    function void LeftParentheses(int x, int y) {
-        var int memAddress;
-        let memAddress = 16384 + (32 * y) + (x / 16);
-        do Memory.poke(memAddress+0, 960);
-        do Memory.poke(memAddress+32, 960);
-        do Memory.poke(memAddress+64, 48);
-        do Memory.poke(memAddress+96, 48);
-        do Memory.poke(memAddress+128, 12);
-        do Memory.poke(memAddress+160, 12);
-        do Memory.poke(memAddress+192, 12);
-        do Memory.poke(memAddress+224, 12);
-        do Memory.poke(memAddress+256, 12);
-        do Memory.poke(memAddress+288, 12);
-        do Memory.poke(memAddress+320, 12);
-        do Memory.poke(memAddress+352, 12);
-        do Memory.poke(memAddress+384, 48);
-        do Memory.poke(memAddress+416, 48);
-        do Memory.poke(memAddress+448, 960);
-        do Memory.poke(memAddress+480, 960);
-        return;
-    }
-
-    function void RightParentheses(int x, int y) {
-        var int memAddress;
-        let memAddress = 16384 + (32 * y) + (x / 16);
-        do Memory.poke(memAddress+0, 960);
-        do Memory.poke(memAddress+32, 960);
-        do Memory.poke(memAddress+64, 3072);
-        do Memory.poke(memAddress+96, 3072);
-        do Memory.poke(memAddress+128, 12288);
-        do Memory.poke(memAddress+160, 12288);
-        do Memory.poke(memAddress+192, 12288);
-        do Memory.poke(memAddress+224, 12288);
-        do Memory.poke(memAddress+256, 12288);
-        do Memory.poke(memAddress+288, 12288);
-        do Memory.poke(memAddress+320, 12288);
-        do Memory.poke(memAddress+352, 12288);
-        do Memory.poke(memAddress+384, 3072);
-        do Memory.poke(memAddress+416, 3072);
-        do Memory.poke(memAddress+448, 960);
-        do Memory.poke(memAddress+480, 960);
-        return;
-    }
-
-    function void Factorial(int x, int y){
-        var int memAddress;
-        let memAddress = 16384 + (32 * y) + (x / 16);
-        do Memory.poke(memAddress+0, 0);
-        do Memory.poke(memAddress+32, -16129);
-        do Memory.poke(memAddress+64, -16129);
-        do Memory.poke(memAddress+96, -15613);
-        do Memory.poke(memAddress+128, -15613);
-        do Memory.poke(memAddress+160, -13309);
-        do Memory.poke(memAddress+192, -13309);
-        do Memory.poke(memAddress+224, -13309);
-        do Memory.poke(memAddress+256, -13309);
-        do Memory.poke(memAddress+288, -13309);
-        do Memory.poke(memAddress+320, 3075);
-        do Memory.poke(memAddress+352, 3075);
-        do Memory.poke(memAddress+384, -13309);
-        do Memory.poke(memAddress+416, -13309);
-        do Memory.poke(memAddress+448, 0);
-        do Memory.poke(memAddress+480, 0);
         return;
     }
 
@@ -517,28 +430,6 @@ class Button {
         do Memory.poke(memAddress+352, -1);
         do Memory.poke(memAddress+384, 0);
         do Memory.poke(memAddress+416, 0);
-        do Memory.poke(memAddress+448, 0);
-        do Memory.poke(memAddress+480, 0);
-        return;
-    }
-
-    function void Opposite (int x, int y) {
-        var int memAddress;
-        let memAddress = 16384 + (32 * y) + (x / 16);
-        do Memory.poke(memAddress+0, 24);
-        do Memory.poke(memAddress+32, 24);
-        do Memory.poke(memAddress+64, 12312);
-        do Memory.poke(memAddress+96, 12543);
-        do Memory.poke(memAddress+128, 3327);
-        do Memory.poke(memAddress+160, 3096);
-        do Memory.poke(memAddress+192, 792);
-        do Memory.poke(memAddress+224, 792);
-        do Memory.poke(memAddress+256, 192);
-        do Memory.poke(memAddress+288, 192);
-        do Memory.poke(memAddress+320, -464);
-        do Memory.poke(memAddress+352, -464);
-        do Memory.poke(memAddress+384, 12);
-        do Memory.poke(memAddress+416, 12);
         do Memory.poke(memAddress+448, 0);
         do Memory.poke(memAddress+480, 0);
         return;

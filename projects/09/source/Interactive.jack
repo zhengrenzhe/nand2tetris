@@ -44,29 +44,9 @@ class Interactive {
             do list.append(keyCode);
         }
 
-        // (
-        if(keyCode = 40){
-            do list.append(keyCode);
-        }
-
-        // )
-        if(keyCode = 41){
-            do list.append(keyCode);
-        }
-
         // esc for ac button
         if(keyCode = 140){
             do list.clear();
-        }
-
-        // ! for n!
-        if(keyCode = 33){
-            do list.append(keyCode);
-        }
-
-        // opposite
-        if(keyCode = 64){
-            do list.append(keyCode);
         }
 
         do Display.refresh(list);

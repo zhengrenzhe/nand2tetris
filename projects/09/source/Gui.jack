@@ -1,7 +1,6 @@
 class Gui {
     static int viewWidth, viewHeight, padding, displayAreaHeight;
     static int columns, rows, buttonCount, buttonWidth, buttonHeight, buttonMargin;
-    static Array buttons;
 
     // initial all constant
     function void init () {
@@ -19,7 +18,7 @@ class Gui {
 
         // how many columns and rows of buttons
         let columns = 4;
-        let rows = 5;
+        let rows = 4;
         let buttonCount = columns * rows;
         
         // button margin
@@ -29,29 +28,6 @@ class Gui {
         let buttonWidth = (viewWidth - (2 * padding) - ((columns + 1) * buttonMargin)) / columns;
         let buttonHeight = (viewHeight - (2 * padding) - displayAreaHeight - ((rows + 1) * buttonMargin)) / rows;
 
-        // all buttons
-        let buttons = Array.new(buttonCount);
-        let buttons[0] = "LeftParentheses";
-        let buttons[1] = "RightParentheses";
-        let buttons[2] = "Factorial";
-        let buttons[3] = "AC";
-        let buttons[4] = "7";
-        let buttons[5] = "8";
-        let buttons[6] = "9";
-        let buttons[7] = "Div";
-        let buttons[8] = "4";
-        let buttons[9] = "5";
-        let buttons[10] = "6";
-        let buttons[11] = "Multi";
-        let buttons[12] = "1";
-        let buttons[13] = "2";
-        let buttons[14] = "3";
-        let buttons[15] = "Sub";
-        let buttons[16] = "Opposite";
-        let buttons[17] = "0";
-        let buttons[18] = "equal";
-        let buttons[19] = "Plus";
-        
         return;
     }
 
