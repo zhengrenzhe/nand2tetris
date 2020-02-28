@@ -1,0 +1,5 @@
+{
+    "rust.all_features": true,
+    "rust.wait_to_build": 0,
+    "clock.active": true
+}
