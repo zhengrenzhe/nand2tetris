@@ -51,7 +51,7 @@ class Interactive {
 
         // esc for ac button
         if(keyCode = 140){
-            do list.append(keyCode);
+            do list.clear();
         }
 
         // ! for n!
@@ -64,7 +64,7 @@ class Interactive {
             do list.append(keyCode);
         }
 
-        do list.log();
+        do Display.refresh(list);
 
         return;
     }

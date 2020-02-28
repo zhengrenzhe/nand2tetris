@@ -4,6 +4,11 @@ class LinkList {
     field int length;
 
     constructor LinkList new() {
+        do createHeadTail();
+        return this;
+    }
+
+    method void createHeadTail() {
         var Node headNode, tailNode;
         
         let headNode = Node.new(0);
@@ -14,9 +19,9 @@ class LinkList {
 
         let head = headNode;
         let tail = tailNode;
-        let length = 0;
 
-        return this;
+        let length = 0;
+        return;
     }
 
     method void append(char data) {
@@ -31,6 +36,8 @@ class LinkList {
         do oldTailPrev.setNext(newNode);
         do newNode.setPrev(oldTailPrev);
 
+        let length = length + 1;
+
         return;
     }
 
@@ -38,7 +45,9 @@ class LinkList {
         var Node current;
 
         do Output.moveCursor(0, 0);
-        do Output.printString("from head to tail");
+        do Output.printString("from head to tail  ");
+        do Output.printInt(length);
+        do Output.printString("nodes");
         do Output.println();
         
         let current = head;
@@ -49,6 +58,18 @@ class LinkList {
             let current = current.getNext();
         }
 
+        return;
+    }
+
+    method void clear() {
+        var Node current, next;
+        let current = head;
+        while (~(current = null)) {
+            let next = current.getNext();
+            do current.dispose();
+            let current = next;
+        }
+        do createHeadTail();
         return;
     }
 }

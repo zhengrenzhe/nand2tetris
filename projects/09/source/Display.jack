@@ -1,0 +1,6 @@
+class Display {
+    function void refresh (LinkList list) {
+        do list.log();
+        return;
+    }
+}

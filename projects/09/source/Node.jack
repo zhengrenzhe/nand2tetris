@@ -31,4 +31,11 @@ class Node {
     method Node getPrev() {
         return prev;
     }
+
+    method void dispose(){
+        let next = null;
+        let prev = null;
+        do Memory.deAlloc(this);
+        return;
+    }
 }
