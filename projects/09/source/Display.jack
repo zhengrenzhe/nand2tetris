@@ -2,10 +2,10 @@ class Display {
     static int startX, startY, endX, endY;
 
     function void init() {
-        let startX = 6;
-        let startY = 6;
-        let endX = 505;
-        let endY = 62;
+        let startX = 5;
+        let startY = 5;
+        let endX = 506;
+        let endY = 63;
 
         do Display.clear();
         return;
@@ -17,7 +17,7 @@ class Display {
     }
 
     function void clear() {
-        do Screen.setColor(false);
+        do Screen.setColor(true);
         do Screen.drawRectangle(startX, startY, endX, endY);
         return;
     }
