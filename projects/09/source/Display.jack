@@ -1,6 +1,24 @@
 class Display {
-    function void refresh (LinkList list) {
-        do list.log();
+    static int startX, startY, endX, endY;
+
+    function void init() {
+        let startX = 6;
+        let startY = 6;
+        let endX = 505;
+        let endY = 62;
+
+        do Display.clear();
+        return;
+    }
+
+    function void refresh(LinkList list) {
+        do Display.clear();
+        return;
+    }
+
+    function void clear() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(startX, startY, endX, endY);
         return;
     }
 }

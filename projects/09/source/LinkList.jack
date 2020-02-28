@@ -47,8 +47,7 @@ class LinkList {
         do Output.moveCursor(0, 0);
         do Output.printString("from head to tail  ");
         do Output.printInt(length);
-        do Output.printString("nodes");
-        do Output.println();
+        do Output.printString(" nodes  ");
         
         let current = head;
 
