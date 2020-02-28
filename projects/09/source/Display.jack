@@ -12,13 +12,90 @@ class Display {
     }
 
     function void refresh(LinkList list) {
+        var Node tail, current;
+        var int buttonIndex, offset;
+        
         do Display.clear();
+        
+        let tail = list.getTail();
+        let current = tail.getPrev();
+        let offset = endX - 30;
+
+        while (~(current.getData() = null)) {
+            let buttonIndex = Display.convertCharToButtonIndex(current.getData());
+            do Button.draw(buttonIndex, offset, 20);
+            let offset = offset - 30;
+            let current = current.getPrev();
+        }
+
         return;
     }
 
     function void clear() {
-        do Screen.setColor(true);
+        do Screen.setColor(false);
         do Screen.drawRectangle(startX, startY, endX, endY);
+        do Screen.setColor(true);
         return;
+    }
+
+    function int convertCharToButtonIndex(int code){
+        if(code = 48){
+            return 17;
+        }
+        if(code = 49){
+            return 12;
+        }
+        if(code = 50){
+            return 13;
+        }
+        if(code = 51){
+            return 14;
+        }
+        if(code = 52){
+            return 8;
+        }
+        if(code = 53){
+            return 9;
+        }
+        if(code = 54){
+            return 10;
+        }
+        if(code = 55){
+            return 4;
+        }
+        if(code = 56){
+            return 5;
+        }
+        if(code = 57){
+            return 6;
+        }
+        if(code = 61){
+            return 18;
+        }
+        if(code = 43){
+            return 19;
+        }
+        if(code = 45){
+            return 15;
+        }
+        if(code = 42){
+            return 11;
+        }
+        if(code = 47){
+            return 7;
+        }
+        if(code = 40){
+            return 0;
+        }
+        if(code = 41){
+            return 1;
+        }
+        if(code = 33){
+            return 2;
+        }
+        if(code = 64){
+            return 16;
+        }
+        return 0;
     }
 }

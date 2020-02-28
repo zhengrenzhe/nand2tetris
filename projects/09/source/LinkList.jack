@@ -8,6 +8,10 @@ class LinkList {
         return this;
     }
 
+    method Node getTail(){
+        return tail;
+    }
+
     method void createHeadTail() {
         var Node headNode, tailNode;
         
