@@ -1,6 +1,28 @@
 class Calculator {
-    function void run () {
+    function void run() {
         do Gui.drawFramework();
+        return;
+    }
+
+    function void mainLoop() {
+        var boolean exit;
+        var char key;
+        let exit = false;
+
+        do Interactive.init();
+
+        while (~exit) {
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+            }
+
+            do Interactive.onKeyPress(key);
+
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+             }
+        }
+
         return;
     }
 }

@@ -1,0 +1,15 @@
+class Interactive {
+    static LinkList list;
+
+    function void init() {
+        let list = LinkList.new();
+        return;
+    }
+
+    function void onKeyPress(char keyCode) {
+        do list.append(keyCode);
+        do list.log();
+
+        return;
+    }
+}

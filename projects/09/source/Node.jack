@@ -1,0 +1,34 @@
+class Node {
+    field char data;
+    field Node next;
+    field Node prev;
+
+    constructor Node new(char nodeData) {
+        let data = nodeData;
+        let next = null;
+        let prev = null;
+        return this;
+    }
+
+    method char getData() {
+        return data;
+    }
+
+    method void setNext(Node nextNode) {
+        let next = nextNode;
+        return;
+    }
+
+    method void setPrev(Node prevNode) {
+        let prev = prevNode;
+        return;
+    }
+
+    method Node getNext() {
+        return next;
+    }
+
+    method Node getPrev() {
+        return prev;
+    }
+}

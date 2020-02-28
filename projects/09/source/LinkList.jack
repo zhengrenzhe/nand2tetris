@@ -1,0 +1,54 @@
+class LinkList {
+    field Node head;
+    field Node tail;
+    field int length;
+
+    constructor LinkList new() {
+        var Node headNode, tailNode;
+        
+        let headNode = Node.new(0);
+        let tailNode = Node.new(0);
+        
+        do headNode.setNext(tailNode);
+        do tailNode.setPrev(headNode);
+
+        let head = headNode;
+        let tail = tailNode;
+        let length = 0;
+
+        return this;
+    }
+
+    method void append(char data) {
+        var Node newNode, oldTailPrev;
+
+        let newNode = Node.new(data);
+
+        let oldTailPrev = tail.getPrev();
+
+        do tail.setPrev(newNode);
+        do newNode.setNext(tail);
+        do oldTailPrev.setNext(newNode);
+        do newNode.setPrev(oldTailPrev);
+
+        return;
+    }
+
+    method void log() {
+        var Node current;
+
+        do Output.moveCursor(0, 0);
+        do Output.printString("from head to tail");
+        do Output.println();
+        
+        let current = head;
+
+        while (~(current = null)) {
+            do Output.printChar(current.getData());
+            do Output.printString(" => ");
+            let current = current.getNext();
+        }
+
+        return;
+    }
+}
