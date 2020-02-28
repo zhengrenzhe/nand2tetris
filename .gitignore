@@ -10,6 +10,5 @@ compiler/vm-compiler/**/*.txt
 compiler/vm-compiler/**/*.hack
 compiler/vm-compiler/**/*.asm
 compiler/VMTranslator
-.vscode
 tools/**/*.dat
 projects/09/**/*.vm

@@ -319,4 +319,26 @@ class Button {
         return;
     }
 
+    function void one (int x, int y) {
+        var int memAddress;
+        let memAddress = 16384 + (32 * y) + (x / 16);
+        do Memory.poke(memAddress+0, 384);
+        do Memory.poke(memAddress+32, 480);
+        do Memory.poke(memAddress+64, 480);
+        do Memory.poke(memAddress+96, 408);
+        do Memory.poke(memAddress+128, 408);
+        do Memory.poke(memAddress+160, 384);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 384);
+        do Memory.poke(memAddress+256, 384);
+        do Memory.poke(memAddress+288, 384);
+        do Memory.poke(memAddress+320, 384);
+        do Memory.poke(memAddress+352, 384);
+        do Memory.poke(memAddress+384, 384);
+        do Memory.poke(memAddress+416, 384);
+        do Memory.poke(memAddress+448, 8184);
+        do Memory.poke(memAddress+480, 8184);
+        return;
+    }
+
 }
