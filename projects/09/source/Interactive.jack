@@ -6,6 +6,10 @@ class Interactive {
         return;
     }
 
+    function void calculate() {
+        return;
+    }
+
     function void onKeyPress(char keyCode) {
         // from 0 to 9
         if (keyCode > 47){
@@ -16,7 +20,8 @@ class Interactive {
 
         // =
         if (keyCode = 61){
-            do list.append(keyCode);
+            do Interactive.calculate();
+            return;
         }
         
         // +
