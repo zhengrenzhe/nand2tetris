@@ -80,7 +80,7 @@ class Gui {
             let y = padding + displayAreaHeight + ((row + 1) * buttonMargin) + (row * buttonHeight);
 
             do Render.rect(x, y, buttonWidth + 2, buttonHeight + 4);
-            do Button.draw(i);
+            do Button.draw(i, x + (buttonWidth / 2), y + (buttonHeight / 2) - 5);
 
             if (col < (columns - 1)) {
                 let col = col + 1;
