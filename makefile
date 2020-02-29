@@ -73,6 +73,7 @@ project9:
 	$(call call_tool, $(JackCompiler), $(PROJ_9)/source)
 
 clean:
+	@rm $(PROJ_9)/**/*.vm
 	@rm $(PROJ_8)/**/**/*.out
 	@rm $(PROJ_8)/**/**/*.asm
 	@rm $(PROJ_7)/**/**/*.out

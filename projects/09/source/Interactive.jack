@@ -1,6 +1,11 @@
 class Interactive {
+    // for save user input
     static LinkList list;
+
+    // for save all numbers
     static LinkList number_list;
+
+    // for save + - * /
     static LinkList operator_list;
 
     function void init() {
@@ -10,6 +15,7 @@ class Interactive {
         return;
     }
 
+    // remove all values in list
     function void clear() {
         do list.clear();
         do number_list.clear();
@@ -18,18 +24,24 @@ class Interactive {
         return;
     }
 
-    function void displayResult() {
+    function void calculateResult() {
         var int result;
 
         do Interactive.parseUserInput();
-        // 把等号pop出去
+        // remove = in operator_list
         do operator_list.popTail();
+
+        // first calculate multiply and divide, high priority 
         do Interactive.calculate(42, 47);
+        // second calculate addition and subtraction, low priority 
         do Interactive.calculate(43, 45);
 
+        // only one item in number_list, indicate the calculate is successfully.
         if (number_list.getLength() = 1) {
             let result = number_list.getNodeValueByIndex(0);
+            // clear lists
             do Interactive.clear();
+            // display the result
             do Display.show(result);
         }else{
             do Output.printString("your input expression maybe something wrong");
@@ -39,6 +51,18 @@ class Interactive {
         return;
     }
 
+    /**
+    calculate number_list and operator_list
+    traverse iterator list, pop two operands when encountering a symbol
+    at the end of the calculation, replace the first operand with the result of the calculation and remove the second operand from the number_list
+    for example:
+        number_list: [1, 2]
+        operator_list: ['+']
+    
+    result:
+        number_list: [3]
+        operator_list: []
+    */
     function void calculate(int opTypeA, int opTypeB) {
         var Node opHead, opCurrent, numberNodeA, numberNodeB;
         var int opIndex, currentOpResult;
@@ -81,6 +105,14 @@ class Interactive {
         return;
     }
 
+    /**
+    split character sequence to number_list and operator_list   
+    for example:
+        we got a character sequence by user input ['1', '2', '+', '3', '4']
+        this function will merge '1' '2' as number 12, '3' '4' as number 34
+        the number_list will got [12, 34]
+        the operator_list will got ['+']
+    */
     function void parseUserInput() {
         var Node head, current;
         var Array tmp;
@@ -92,13 +124,14 @@ class Interactive {
         let index = 0;
 
         while (~(current.getData() = null)) {
-            // 是数字
+            // is number
             if ((current.getData() > 47) & (current.getData() < 58)) {
                 let tmp[index] = current.getData();
                 let index = index + 1;
-            // 遇到了符号
+            
+            // is symbol
             }else{
-                // 解析之前的数字
+                // the numbers(character) before the symbol
                 let tmpIndex = 0;
                 while (tmpIndex < index){
                     let number = number + ((tmp[tmpIndex] - 48) * MathMore.Exp(10, index - tmpIndex - 1));
@@ -111,7 +144,6 @@ class Interactive {
                 let index = 0;
                 let number = 0;
             }
-
             let current = current.getNext();
         }
 
@@ -129,7 +161,7 @@ class Interactive {
         // =
         if (keyCode = 61){
             do list.pushTail(keyCode);
-            do Interactive.displayResult();
+            do Interactive.calculateResult();
             return;
         }
         

@@ -1,9 +1,18 @@
 class Calculator {
     function void run() {
+        // draw welcome information
         do Calculator.welcome();
+
+        // draw all borders, buttons
         do Gui.drawFramework();
+
+        // initial linklist for save user input and calculate
         do Interactive.init();
+
+        // initial result display area
         do Display.init();
+
+        // start keyboard listener
         do Calculator.mainLoop();
         return;
     }

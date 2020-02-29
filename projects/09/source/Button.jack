@@ -1,4 +1,5 @@
 class Button {
+    // all keyboard buttons
     function void draw(int index, int x, int y){
         if (index = 0) {
             do Button.Seven(x, y);

@@ -1,4 +1,5 @@
 class Render {
+    // draw hollow rectangle
     function void rect(int x, int y, int width, int height) {
         var int x, y, rightX, bottomY;
 

@@ -11,6 +11,7 @@ class Display {
         return;
     }
 
+    // refresh display area, the data source is what you want to display.
     function void refresh(LinkList list) {
         var Node tail, current;
         var int buttonIndex, offset;
@@ -31,6 +32,7 @@ class Display {
         return;
     }
 
+    // show int
     function void show(int number) {
         var String numberStr;
         var LinkList list;
