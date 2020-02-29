@@ -1,8 +1,10 @@
 class Calculator {
     function void run() {
+        do Calculator.welcome();
         do Gui.drawFramework();
         do Interactive.init();
         do Display.init();
+        do Calculator.mainLoop();
         return;
     }
 
@@ -20,9 +22,37 @@ class Calculator {
 
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
-             }
+            }
         }
 
+        return;
+    }
+
+    function void welcome() {
+        var boolean exit;
+        var char key;
+        let exit = false;
+        do Output.moveCursor(6, 19);
+        do Output.printString("Welcome to this calculator ~");
+        do Output.moveCursor(10, 23);
+        do Output.printString("Author: Zhengrenzhe");
+        do Output.moveCursor(15, 16);
+        do Output.printString("Press any key to start calculator");
+        do Output.moveCursor(17, 16);
+        do Output.printString("ESC => AC");
+        do Output.moveCursor(19, 16);
+        do Output.printString("Other keys in calculator are same as");
+        do Output.moveCursor(20, 16);
+        do Output.printString("your physical keyboard.");
+        while (~exit) {
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+            }
+            let exit = true;
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+            }
+        }
         return;
     }
 }

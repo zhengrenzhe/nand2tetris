@@ -34,6 +34,8 @@ class Gui {
     function void drawFramework () {
         do Gui.init();
 
+        do Screen.clearScreen();
+
         // draw root border
         do Render.rect(padding, padding, viewWidth - (2 * padding), viewHeight - (2 * padding));
 
