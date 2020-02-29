@@ -137,6 +137,13 @@ class LinkList {
         return;
     }
 
+    method void dispose(){
+        do clear();
+        do head.dispose();
+        do tail.dispose();
+        return;
+    }
+
     method void log(boolean printInt) {
         var Node current;
 

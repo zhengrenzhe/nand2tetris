@@ -10,7 +10,17 @@ class Interactive {
         return;
     }
 
+    function void clear() {
+        do list.clear();
+        do number_list.clear();
+        do operator_list.clear();
+        do Display.refresh(list);
+        return;
+    }
+
     function void displayResult() {
+        var int result;
+
         do Interactive.parseUserInput();
         // 把等号pop出去
         do operator_list.popTail();
@@ -18,10 +28,13 @@ class Interactive {
         do Interactive.calculate(43, 45);
 
         if (number_list.getLength() = 1) {
-            do Output.printString("result is ");
-            do Output.printInt(number_list.getNodeValueByIndex(0));
+            let result = number_list.getNodeValueByIndex(0);
+            do Interactive.clear();
+            do Display.show(result);
         }else{
             do Output.printString("your input expression maybe something wrong");
+            do Output.println();
+            do Output.printString("need press AC (ESC button)");
         }
         return;
     }
@@ -142,9 +155,7 @@ class Interactive {
 
         // esc for ac button
         if(keyCode = 140){
-            do list.clear();
-            do number_list.clear();
-            do operator_list.clear();
+            do Interactive.clear();
         }
 
         do Display.refresh(list);

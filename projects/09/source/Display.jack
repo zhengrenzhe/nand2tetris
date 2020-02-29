@@ -31,6 +31,28 @@ class Display {
         return;
     }
 
+    function void show(int number) {
+        var String numberStr;
+        var LinkList list;
+        var int length, index;
+        
+        let list = LinkList.new();
+        let numberStr = String.new(100);
+        do numberStr.setInt(number);
+        let length = numberStr.length();
+        let index = 0;
+
+        while(index < length){
+            do list.pushTail(numberStr.charAt(index));
+            let index = index + 1;
+        }
+
+        do Display.refresh(list);
+        do list.dispose();
+
+        return;
+    }
+
     function void clear() {
         do Screen.setColor(false);
         do Screen.drawRectangle(startX, startY, endX, endY);
