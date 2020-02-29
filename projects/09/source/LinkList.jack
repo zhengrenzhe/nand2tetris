@@ -4,7 +4,7 @@ class LinkList {
     field int length;
 
     constructor LinkList new() {
-        do createHeadTail();
+        do createHeadAndTail();
         return this;
     }
 
@@ -16,11 +16,11 @@ class LinkList {
         return head;
     }
 
-    method void createHeadTail() {
+    method void createHeadAndTail() {
         var Node headNode, tailNode;
         
-        let headNode = Node.new(0);
-        let tailNode = Node.new(0);
+        let headNode = Node.new(null);
+        let tailNode = Node.new(null);
         
         do headNode.setNext(tailNode);
         do tailNode.setPrev(headNode);
@@ -31,8 +31,8 @@ class LinkList {
         let length = 0;
         return;
     }
-
-    method void append(char data) {
+    
+    method void pushTail(char data) {
         var Node newNode, oldTailPrev;
 
         let newNode = Node.new(data);
@@ -49,13 +49,100 @@ class LinkList {
         return;
     }
 
+    method char popTail() {
+        var Node tailPrev, tailPrevPrev;
+        var char poped;
+        if (length = 0) {
+            return null;
+        }
+
+        let tailPrev = tail.getPrev();
+        let tailPrevPrev = tailPrev.getPrev();
+        do tailPrevPrev.setNext(tail);
+        do tail.setPrev(tailPrevPrev);
+        let poped = tailPrev.getData();
+        do tailPrev.dispose();
+        let length = length + 1;
+        return poped;
+    }
+
+    method Node getNodeByIndex(int index) {
+        var Node current;
+        var int i;
+        if (~(index < length)) {
+            return null;
+        }
+        let i = 0;
+        let current = head;
+        while(~(current.getNext() = null)){
+            let current = current.getNext();
+            if (i = index){
+                return current;
+            }else{
+                let i = i + 1;
+            }
+        }
+        return current;
+    }
+
+    method char getNodeValueByIndex(int index){
+        var Node current;
+        let current = getNodeByIndex(index);
+        return current.getData();
+    }
+
+    method void removeNodeByIndex(int index) {
+        var Node willRemoved, willRemovedPrev, willRemovedNext;
+
+        if (~(index < length)) {
+            return;
+        }
+
+        let willRemoved = getNodeByIndex(index);
+        let willRemovedPrev = willRemoved.getPrev();
+        let willRemovedNext = willRemoved.getNext();
+
+        do willRemovedPrev.setNext(willRemovedNext);
+        do willRemovedNext.setPrev(willRemovedPrev);
+
+        do willRemoved.dispose();
+
+        let length = length - 1;
+
+        return;
+    }
+
+    method void replaceData(int index, char newData) {
+        var Node current;
+
+        let current = getNodeByIndex(index);
+        do current.setData(newData);
+
+        return;
+    }
+
+    method int getLength(){
+        return length;
+    }
+
+    method void clear() {
+        var Node current, next;
+        let current = head;
+        while (~(current = null)) {
+            let next = current.getNext();
+            do current.dispose();
+            let current = next;
+        }
+        do createHeadAndTail();
+        return;
+    }
+
     method void log(boolean printInt) {
         var Node current;
 
         do Output.moveCursor(0, 0);
-        do Output.printString("from head to tail  ");
         do Output.printInt(length);
-        do Output.printString(" nodes  ");
+        do Output.printString(" nodes ");
         
         let current = head;
 
@@ -69,18 +156,6 @@ class LinkList {
             let current = current.getNext();
         }
 
-        return;
-    }
-
-    method void clear() {
-        var Node current, next;
-        let current = head;
-        while (~(current = null)) {
-            let next = current.getNext();
-            do current.dispose();
-            let current = next;
-        }
-        do createHeadTail();
         return;
     }
 }

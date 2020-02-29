@@ -14,6 +14,11 @@ class Node {
         return data;
     }
 
+    method void setData(char newData) {
+        let data = newData;
+        return;
+    }
+
     method void setNext(Node nextNode) {
         let next = nextNode;
         return;

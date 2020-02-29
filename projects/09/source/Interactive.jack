@@ -10,7 +10,65 @@ class Interactive {
         return;
     }
 
-    function void calculate() {
+    function void displayResult() {
+        do Interactive.parseUserInput();
+        // 把等号pop出去
+        do operator_list.popTail();
+        do Interactive.calculate(42, 47);
+        do Interactive.calculate(43, 45);
+
+        if (number_list.getLength() = 1) {
+            do Output.printString("result is ");
+            do Output.printInt(number_list.getNodeValueByIndex(0));
+        }else{
+            do Output.printString("your input expression maybe something wrong");
+        }
+        return;
+    }
+
+    function void calculate(int opTypeA, int opTypeB) {
+        var Node opHead, opCurrent, numberNodeA, numberNodeB;
+        var int opIndex, currentOpResult;
+
+        let opHead = operator_list.getHead();
+        let opCurrent = opHead.getNext();
+        let opIndex = 0;
+
+        while(~(opCurrent.getData() = null)){
+            if ((opCurrent.getData() = opTypeA) | (opCurrent.getData() = opTypeB)) {
+                let numberNodeA = number_list.getNodeByIndex(opIndex);
+                let numberNodeB = numberNodeA.getNext();
+
+                if (opCurrent.getData() = 42) {
+                    let currentOpResult = Math.multiply(numberNodeA.getData(), numberNodeB.getData());
+                }
+                if (opCurrent.getData() = 47){
+                    let currentOpResult = Math.divide(numberNodeA.getData(), numberNodeB.getData());
+                }
+                if (opCurrent.getData() = 43){
+                    let currentOpResult = numberNodeA.getData() + numberNodeB.getData();
+                }
+                if (opCurrent.getData() = 45){
+                    let currentOpResult = numberNodeA.getData() - numberNodeB.getData();
+                }
+
+                do number_list.replaceData(opIndex, currentOpResult);
+                do number_list.removeNodeByIndex(opIndex + 1);
+                do operator_list.removeNodeByIndex(opIndex);
+
+                let opHead = operator_list.getHead();
+                let opCurrent = opHead.getNext();
+                let opIndex = 0;
+            }else{
+                let opCurrent = opCurrent.getNext();
+                let opIndex = opIndex + 1;
+            }
+        }
+
+        return;
+    }
+
+    function void parseUserInput() {
         var Node head, current;
         var Array tmp;
         var int index, tmpIndex, number;
@@ -34,8 +92,8 @@ class Interactive {
                     let tmpIndex  = tmpIndex + 1;
                 }
 
-                do number_list.append(number);
-                do operator_list.append(current.getData());
+                do number_list.pushTail(number);
+                do operator_list.pushTail(current.getData());
 
                 let index = 0;
                 let number = 0;
@@ -51,40 +109,42 @@ class Interactive {
         // from 0 to 9
         if (keyCode > 47){
             if (keyCode < 58){
-                do list.append(keyCode);
+                do list.pushTail(keyCode);
             }
         }
 
         // =
         if (keyCode = 61){
-            do list.append(keyCode);
-            do Interactive.calculate();
+            do list.pushTail(keyCode);
+            do Interactive.displayResult();
             return;
         }
         
         // +
         if(keyCode = 43){
-            do list.append(keyCode);
+            do list.pushTail(keyCode);
         }
 
         // -
         if(keyCode = 45){
-            do list.append(keyCode);
+            do list.pushTail(keyCode);
         }
 
         // *
         if(keyCode = 42){
-            do list.append(keyCode);
+            do list.pushTail(keyCode);
         }
 
         // /
         if(keyCode = 47){
-            do list.append(keyCode);
+            do list.pushTail(keyCode);
         }
 
         // esc for ac button
         if(keyCode = 140){
             do list.clear();
+            do number_list.clear();
+            do operator_list.clear();
         }
 
         do Display.refresh(list);
