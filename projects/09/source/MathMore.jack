@@ -1,0 +1,18 @@
+class MathMore {
+    function int Exp (int a, int b) {
+        var int i, result;
+        let i = 1;
+        let result = a;
+        
+        if (b = 0) {
+            return 1;
+        }
+
+        while(i < b){
+            let result = result * a;
+            let i = i + 1;
+        }
+        
+        return result;
+    }
+}

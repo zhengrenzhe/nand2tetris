@@ -1,12 +1,49 @@
 class Interactive {
     static LinkList list;
+    static LinkList number_list;
+    static LinkList operator_list;
 
     function void init() {
         let list = LinkList.new();
+        let number_list = LinkList.new();
+        let operator_list = LinkList.new();
         return;
     }
 
     function void calculate() {
+        var Node head, current;
+        var Array tmp;
+        var int index, tmpIndex, number;
+        
+        let head = list.getHead();
+        let current = head.getNext();
+        let tmp = Array.new(20);
+        let index = 0;
+
+        while (~(current.getData() = null)) {
+            // 是数字
+            if ((current.getData() > 47) & (current.getData() < 58)) {
+                let tmp[index] = current.getData();
+                let index = index + 1;
+            // 遇到了符号
+            }else{
+                // 解析之前的数字
+                let tmpIndex = 0;
+                while (tmpIndex < index){
+                    let number = number + ((tmp[tmpIndex] - 48) * MathMore.Exp(10, index - tmpIndex - 1));
+                    let tmpIndex  = tmpIndex + 1;
+                }
+
+                do number_list.append(number);
+                do operator_list.append(current.getData());
+
+                let index = 0;
+                let number = 0;
+            }
+
+            let current = current.getNext();
+        }
+
         return;
     }
 
@@ -20,6 +57,7 @@ class Interactive {
 
         // =
         if (keyCode = 61){
+            do list.append(keyCode);
             do Interactive.calculate();
             return;
         }
