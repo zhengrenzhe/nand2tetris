@@ -24,11 +24,7 @@ pub fn read_lines(file_path: &str) -> Result<File, Error> {
             if let Ok(child) = item {
                 let child_file_path = String::from(child.path().to_str().unwrap());
                 if child_file_path.contains(".vm") {
-                    // if child_file_path.contains("Sys.vm") {
-                    //     vm_files.insert(0, child_file_path)
-                    // } else {
                     vm_files.push(child_file_path)
-                    // }
                 }
             }
         }
@@ -69,4 +65,11 @@ pub fn read_lines(file_path: &str) -> Result<File, Error> {
 pub fn write_lines(lines: &[String], file_name: &str) -> Result<bool, Error> {
     fs::write(file_name, lines.join("\n"))?;
     Ok(true)
+}
+
+pub fn read_file(file_path: &str) -> Result<String, Error> {
+    let mut file = fs::File::open(file_path)?;
+    let mut content = String::new();
+    file.read_to_string(&mut content)?;
+    Ok(content)
 }

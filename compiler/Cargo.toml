@@ -14,5 +14,5 @@ members = [
     "utils",
     "assembler",
     "vm-compiler",
-    "syntax-analysis"
+    "jack-analyzer"
 ]

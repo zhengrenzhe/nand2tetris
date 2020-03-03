@@ -27,8 +27,17 @@
       <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/jack-analyzer/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/JackAnalyzer/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/JackAnalyzer/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/JackAnalyzer/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/jack-analyzer/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/jack-analyzer/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/jack-analyzer/benches" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/assembler/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/JackAnalyzer/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/assembler/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/jack-analyzer/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/utils/target" />
