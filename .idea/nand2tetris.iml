@@ -23,8 +23,13 @@
       <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/compiler/vm-compiler/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/benches" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/assembler/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/assembler/target" />
+      <excludeFolder url="file://$MODULE_DIR$/compiler/syntax-analysis/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/utils/target" />
       <excludeFolder url="file://$MODULE_DIR$/compiler/vm-compiler/target" />
