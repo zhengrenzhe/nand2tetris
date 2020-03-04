@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="JackAnalyzer" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
     <option name="channel" value="DEFAULT" />
-    <option name="command" value="run -p JackAnalyzer" />
+    <option name="command" value="run -p jack-analyzer  ../projects/10/ExpressionLessSquare" />
     <option name="allFeatures" value="true" />
     <option name="nocapture" value="true" />
     <option name="emulateTerminal" value="false" />

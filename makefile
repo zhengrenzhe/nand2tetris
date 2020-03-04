@@ -3,6 +3,7 @@ CPUEmulator = $(abspath ./tools/CPUEmulator.sh)
 Assembler = $(abspath ./tools/Assembler.sh)
 VMEmulator = $(abspath ./tools/VMEmulator.sh)
 JackCompiler = $(abspath ./tools/JackCompiler.sh)
+TextComparer = $(abspath ./tools/TextComparer.sh)
 
 PROJ_1 = $(abspath ./projects/01)
 PROJ_2 = $(abspath ./projects/02)
@@ -12,6 +13,8 @@ PROJ_5 = $(abspath ./projects/05)
 PROJ_7 = $(abspath ./projects/07)
 PROJ_8 = $(abspath ./projects/08)
 PROJ_9 = $(abspath ./projects/09)
+PROJ_10 = $(abspath ./projects/10)
+
 
 Blue=\033[1;34m
 NC=\033[0m
@@ -22,7 +25,7 @@ define call_tool
 	done
 endef
 
-all: project1 project2 project3 project4 project5 project7 project8 clean
+all: project1 project2 project3 project4 project5 project7 project8 project10 clean
 
 project1: $(PROJ_1)/*.tst
 	@echo "${Blue}Testing $@... ${NC}"
@@ -72,8 +75,25 @@ project8:
 project9:
 	$(call call_tool, $(JackCompiler), $(PROJ_9)/source)
 
+project10:
+	@echo "${Blue}Testing $@... ${NC}"
+	@cd compiler;\
+	cargo -q run -p jack-analyzer $(PROJ_10)/ArrayTest;\
+	cargo -q run -p jack-analyzer $(PROJ_10)/ExpressionLessSquare;\
+	cargo -q run -p jack-analyzer $(PROJ_10)/Square;
+	@cd ..
+	$(TextComparer) $(PROJ_10)/ArrayTest/MainT.xml $(PROJ_10)/ArrayTest/MainT2.xml
+	$(TextComparer) $(PROJ_10)/ExpressionLessSquare/MainT.xml $(PROJ_10)/ExpressionLessSquare/MainT2.xml
+	$(TextComparer) $(PROJ_10)/ExpressionLessSquare/SquareGameT.xml $(PROJ_10)/ExpressionLessSquare/SquareGameT2.xml
+	$(TextComparer) $(PROJ_10)/ExpressionLessSquare/SquareT.xml $(PROJ_10)/ExpressionLessSquare/SquareT2.xml
+	$(TextComparer) $(PROJ_10)/Square/MainT.xml $(PROJ_10)/Square/MainT2.xml
+	$(TextComparer) $(PROJ_10)/Square/SquareGameT.xml $(PROJ_10)/Square/SquareGameT2.xml
+	$(TextComparer) $(PROJ_10)/Square/SquareT.xml $(PROJ_10)/Square/SquareT2.xml
+
+
+
 clean:
-	@rm $(PROJ_9)/**/*.vm
+	@rm $(PROJ_10)/**/*T2.xml
 	@rm $(PROJ_8)/**/**/*.out
 	@rm $(PROJ_8)/**/**/*.asm
 	@rm $(PROJ_7)/**/**/*.out
