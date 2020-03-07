@@ -118,6 +118,11 @@ pub fn write_lines(lines: &[String], file_name: &str) -> Result<bool, Error> {
     Ok(true)
 }
 
+pub fn write_string(content: String, file_name: &str) -> Result<bool, Error> {
+    fs::write(file_name, content)?;
+    Ok(true)
+}
+
 pub fn read_file(file_path: &str) -> Result<String, Error> {
     let mut file = fs::File::open(file_path)?;
     let mut content = String::new();

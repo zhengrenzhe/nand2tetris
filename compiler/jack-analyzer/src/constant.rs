@@ -67,11 +67,12 @@ pub fn is_empty_character(ch: char) -> bool {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Token {
     KeyWord(String),
     Symbol(String),
     IntegerConstant(usize),
     StringConstant(String),
     Identifier(String),
+    Empty,
 }

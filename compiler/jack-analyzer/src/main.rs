@@ -1,14 +1,18 @@
 use std::io::Error;
 use std::process;
 
+use parser::parser;
 use pre_process::pre_process;
 use utils::args::get_args;
 use utils::io::read_files;
-use xml::write_tokens_xml;
+use xml::{write_ast_xml, write_tokens_xml};
 
 use tokenizer::tokenizer;
 
 mod constant;
+mod index;
+mod node;
+mod parser;
 mod pre_process;
 mod tokenizer;
 mod xml;
@@ -30,6 +34,10 @@ fn run() -> Result<(), Error> {
         for file in read_files(&file_path, ".jack")? {
             let tokens = tokenizer(&pre_process(file.content));
             write_tokens_xml(&tokens, &format!("{}/{}T2.xml", file.output_dir, file.stem))?;
+            let ast = parser(&tokens);
+            println!("{:#?}", ast);
+            write_ast_xml(ast, &format!("{}/{}2.xml", file.output_dir, file.stem))?;
+            println!("end");
         }
     }
 
