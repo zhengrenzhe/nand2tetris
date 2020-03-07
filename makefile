@@ -89,11 +89,18 @@ project10:
 	$(TextComparer) $(PROJ_10)/Square/MainT.xml $(PROJ_10)/Square/MainT2.xml
 	$(TextComparer) $(PROJ_10)/Square/SquareGameT.xml $(PROJ_10)/Square/SquareGameT2.xml
 	$(TextComparer) $(PROJ_10)/Square/SquareT.xml $(PROJ_10)/Square/SquareT2.xml
+	$(TextComparer) $(PROJ_10)/ArrayTest/Main.xml $(PROJ_10)/ArrayTest/Main2.xml
+	$(TextComparer) $(PROJ_10)/ExpressionLessSquare/Main.xml $(PROJ_10)/ExpressionLessSquare/Main2.xml
+	$(TextComparer) $(PROJ_10)/ExpressionLessSquare/SquareGame.xml $(PROJ_10)/ExpressionLessSquare/SquareGame2.xml
+	$(TextComparer) $(PROJ_10)/ExpressionLessSquare/Square.xml $(PROJ_10)/ExpressionLessSquare/Square2.xml
+	$(TextComparer) $(PROJ_10)/Square/Main.xml $(PROJ_10)/Square/Main2.xml
+	$(TextComparer) $(PROJ_10)/Square/SquareGame.xml $(PROJ_10)/Square/SquareGame2.xml
+	$(TextComparer) $(PROJ_10)/Square/Square.xml $(PROJ_10)/Square/Square2.xml
 
 
 
 clean:
-	@rm $(PROJ_10)/**/*T2.xml
+	@rm $(PROJ_10)/**/*2.xml
 	@rm $(PROJ_8)/**/**/*.out
 	@rm $(PROJ_8)/**/**/*.asm
 	@rm $(PROJ_7)/**/**/*.out
