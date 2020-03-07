@@ -14,15 +14,15 @@ impl Index {
         cur
     }
 
+    pub fn prev(&self) -> usize {
+        self.start - 1
+    }
+
     pub fn preview(&self) -> usize {
         self.start
     }
 
     pub fn has_next(&self) -> bool {
-        self.start < self.max
-    }
-
-    pub fn next(&mut self) {
-        self.start += 1
+        self.start < self.max - 1
     }
 }
