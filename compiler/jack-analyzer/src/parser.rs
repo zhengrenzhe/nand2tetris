@@ -192,7 +192,7 @@ fn compile_let(tokens: &[Token], index: &mut Index) -> Node {
     if let Token::Symbol(val) = tokens[index.preview()].clone() {
         if val == "[" {
             let_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
-            let_node.append_child(compile_expression(tokens, index, "]"));
+            let_node.append_child(compile_expression(tokens, index, "]", ""));
             let_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
         }
     }
@@ -200,20 +200,39 @@ fn compile_let(tokens: &[Token], index: &mut Index) -> Node {
     // =
     let_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
     // expression
-    let_node.append_child(compile_expression(tokens, index, ";"));
+    let_node.append_child(compile_expression(tokens, index, ";", ""));
     // ;
     let_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
 
     let_node
 }
 
-fn compile_expression(tokens: &[Token], index: &mut Index, end_char: &str) -> Node {
+fn compile_expression(
+    tokens: &[Token],
+    index: &mut Index,
+    end_char: &str,
+    end_char2: &str,
+) -> Node {
     let mut expression_node = Node::new(NodeType::Expression, Token::Empty);
 
     loop {
         if let Token::Symbol(val) = tokens[index.preview()].clone() {
             if val == end_char {
                 return expression_node;
+            }
+            if val == end_char2 {
+                return expression_node;
+            }
+            if val == "-" || val == "~" {
+                if let Token::Symbol(val_prev) = tokens[index.prev()].clone() {
+                    match val_prev.as_str() {
+                        "+" | "-" | "*" | "/" | "&amp;" | "|" | "&lt;" | "&gt;" | "=" | "(" => {
+                            expression_node.append_child(compile_term(tokens, index));
+                            continue;
+                        }
+                        _ => {}
+                    }
+                }
             }
             match val.as_str() {
                 "+" | "-" | "*" | "/" | "&amp;" | "|" | "&lt;" | "&gt;" | "=" => expression_node
@@ -224,7 +243,6 @@ fn compile_expression(tokens: &[Token], index: &mut Index, end_char: &str) -> No
             }
         } else {
             expression_node.append_child(compile_term(tokens, index));
-            // return expression_node;
         }
     }
 }
@@ -244,7 +262,7 @@ fn compile_term(tokens: &[Token], index: &mut Index) -> Node {
         Token::Symbol(val) => {
             if val == "(" {
                 term_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
-                term_node.append_child(compile_expression(tokens, index, ")"));
+                term_node.append_child(compile_expression(tokens, index, ")", ""));
                 term_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
                 return term_node;
             }
@@ -259,7 +277,7 @@ fn compile_term(tokens: &[Token], index: &mut Index) -> Node {
             if let Token::Symbol(val) = tokens[index.preview()].clone() {
                 if val == "[" {
                     term_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
-                    term_node.append_child(compile_expression(tokens, index, "]"));
+                    term_node.append_child(compile_expression(tokens, index, "]", ""));
                     term_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
                     return term_node;
                 }
@@ -286,8 +304,11 @@ fn compile_subroutine_call(tokens: &[Token], index: &mut Index) -> Vec<Node> {
         }
         if let Token::Symbol(val) = tokens[index.preview()].clone() {
             if val == "(" {
+                // (
                 result.push(Node::new(NodeType::Atom, tokens[index.get()].clone()));
+                // parameters
                 result.push(compile_expression_list(tokens, index));
+                // )
                 result.push(Node::new(NodeType::Atom, tokens[index.get()].clone()));
             }
         }
@@ -309,7 +330,7 @@ fn compile_expression_list(tokens: &[Token], index: &mut Index) -> Node {
                     .append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
             }
         }
-        expression_list_node.append_child(compile_expression(tokens, index, ")"));
+        expression_list_node.append_child(compile_expression(tokens, index, ",", ")"));
     }
 }
 
@@ -321,7 +342,7 @@ fn compile_if(tokens: &[Token], index: &mut Index) -> Node {
     // (
     if_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
     // expression
-    if_node.append_child(compile_expression(tokens, index, ")"));
+    if_node.append_child(compile_expression(tokens, index, ")", ""));
     // )
     if_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
     // {
@@ -354,7 +375,7 @@ fn compile_while(tokens: &[Token], index: &mut Index) -> Node {
     while_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
 
     // expression
-    while_node.append_child(compile_expression(tokens, index, ")"));
+    while_node.append_child(compile_expression(tokens, index, ")", ""));
 
     // )
     while_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
@@ -394,12 +415,12 @@ fn compile_return(tokens: &[Token], index: &mut Index) -> Node {
     // return
     return_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
 
-    if let Token::Symbol(val) = tokens[index.preview()].clone() {
-        if val != ";" {
-            return_node.append_child(compile_expression(tokens, index, ";"));
-        }
+    // expression
+    if !check_symbol(tokens, index, ";") {
+        return_node.append_child(compile_expression(tokens, index, ";", ""));
     }
 
+    // ;
     return_node.append_child(Node::new(NodeType::Atom, tokens[index.get()].clone()));
 
     return_node

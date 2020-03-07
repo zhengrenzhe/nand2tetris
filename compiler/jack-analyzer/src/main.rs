@@ -35,9 +35,7 @@ fn run() -> Result<(), Error> {
             let tokens = tokenizer(&pre_process(file.content));
             write_tokens_xml(&tokens, &format!("{}/{}T2.xml", file.output_dir, file.stem))?;
             let ast = parser(&tokens);
-            println!("{:#?}", ast);
             write_ast_xml(ast, &format!("{}/{}2.xml", file.output_dir, file.stem))?;
-            println!("end");
         }
     }
 
