@@ -14,6 +14,7 @@ mod index;
 mod node;
 mod parser;
 mod pre_process;
+mod symbol_table;
 mod tokenizer;
 mod xml;
 
