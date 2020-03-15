@@ -1,6 +1,7 @@
 use std::io::Error;
 use std::process;
 
+use code_gen::code_gen;
 use parser::parser;
 use pre_process::pre_process;
 use utils::args::get_args;
@@ -9,6 +10,7 @@ use xml::{write_ast_xml, write_tokens_xml};
 
 use tokenizer::tokenizer;
 
+mod code_gen;
 mod constant;
 mod index;
 mod node;
@@ -36,7 +38,8 @@ fn run() -> Result<(), Error> {
             let tokens = tokenizer(&pre_process(file.content));
             write_tokens_xml(&tokens, &format!("{}/{}T2.xml", file.output_dir, file.stem))?;
             let ast = parser(&tokens);
-            write_ast_xml(ast, &format!("{}/{}2.xml", file.output_dir, file.stem))?;
+            write_ast_xml(&ast, &format!("{}/{}2.xml", file.output_dir, file.stem))?;
+            code_gen(&ast);
         }
     }
 

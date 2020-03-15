@@ -14,7 +14,7 @@ pub fn write_tokens_xml(tokens: &[Token], file_path: &str) -> Result<bool, Error
     write_string(lines.join(""), file_path)
 }
 
-pub fn write_ast_xml(node: Node, file_path: &str) -> Result<bool, Error> {
+pub fn write_ast_xml(node: &Node, file_path: &str) -> Result<bool, Error> {
     write_string(travel_tree(&node, 0), file_path)?;
     Ok(true)
 }
